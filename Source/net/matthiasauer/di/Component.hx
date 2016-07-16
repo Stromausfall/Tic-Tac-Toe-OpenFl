@@ -5,5 +5,5 @@ package net.matthiasauer.di;
  */
 interface Component 
 {
-	function initialize() : Void;
+	function initializeComponent() : Void;
 }

@@ -15,13 +15,15 @@ class TestClass1 implements Component implements TestClass1View1 implements Test
 	{	
 	}
 	
-	public function initialize() : Void
-	{	
+	public function initializeComponent() : Void
+	{
 	}
 }
 
 interface TestClass2View1 extends ComponentView
 {
+	function getDependencyTestClass1() : TestClass1View1;
+	function getInitializedCount() : Int;
 }
 
 interface TestClass2View2 extends ComponentView
@@ -30,14 +32,88 @@ interface TestClass2View2 extends ComponentView
 
 class TestClass2 implements Component implements TestClass2View1 implements TestClass2View2
 {
+	private var dependency:TestClass1View1;
+	private var initializedCount:Int = 0;
+	
+	public function getDependencyTestClass1() : TestClass1View1
+	{
+		return this.dependency;
+	}
+	
 	public function new()
 	{	
 	}
 	
-	public function initialize() : Void
-	{	
+	public function getInitializedCount() : Int
+	{
+		return this.initializedCount;
+	}
+	
+	public function initializeComponent() : Void
+	{
+		dependency = System.get(TestClass1View1);
+		initializedCount += 1;
 	}
 }
+
+interface TestClass3View1 extends ComponentView
+{
+	function getDependencyTestClass4() : TestClass4View1;
+}
+
+class TestClass3 implements Component implements TestClass3View1
+{
+	private var dependency:TestClass4View1;
+	
+	public function getDependencyTestClass4() : TestClass4View1
+	{
+		return this.dependency;
+	}
+	
+	public function new()
+	{	
+	}
+	
+	public function initializeComponent() : Void
+	{
+		dependency = System.get(TestClass4View1);
+	}
+}
+
+interface TestClass4View1 extends ComponentView
+{
+	function getDependencyTestClass3() : TestClass3View1;
+	function getInitializedCount() : Int;
+}
+
+class TestClass4 implements Component implements TestClass4View1
+{
+	private var dependency:TestClass3View1;
+	private var dependency2:TestClass4View1;
+	private var initializedCount:Int = 0;
+	
+	public function getDependencyTestClass3() : TestClass3View1
+	{
+		return this.dependency;
+	}
+	
+	public function getInitializedCount() : Int
+	{
+		return this.initializedCount;
+	}
+	
+	public function new()
+	{	
+	}
+	
+	public function initializeComponent() : Void
+	{
+		this.initializedCount += 1;
+		dependency = System.get(TestClass3View1);
+		dependency2 = System.get(TestClass4View1);
+	}
+}
+
 
 /**
  * ...
@@ -149,5 +225,48 @@ class SystemTest extends TestCase
 		var instancePostClear = System.get(TestClass1);
 		
 		assertTrue(instancePreClear != instancePostClear);
+	}
+	
+	public function testThatSimpleDependencyIsResolved() : Void
+	{
+		System.register(TestClass1, [TestClass1View1, TestClass1View2]);
+		System.register(TestClass2, [TestClass2View1, TestClass2View2]);
+		
+		// the TestClass2 instance should now have a reference to the TestClass1 !
+		var testClass2:TestClass2View1 = System.get(TestClass2View1);
+		
+		// it should be the same as the one we get from the System
+		var testClass1InTestClass2:TestClass1View1 = testClass2.getDependencyTestClass1();
+		
+		assertEquals(testClass1InTestClass2, System.get(TestClass1View1));
+		
+		// make sure it isn't null...
+		assertTrue(testClass1InTestClass2 != null);
+	}
+	
+	public function testThatInitializeIsOnlyCalledOnce() : Void
+	{
+		System.register(TestClass1, [TestClass1View1, TestClass1View2]);
+		System.register(TestClass2, [TestClass2View1, TestClass2View2]);
+		
+		// the TestClass2 instance should now have a reference to the TestClass1 !
+		var testClass2:TestClass2View1 = System.get(TestClass2View1);
+		testClass2 = System.get(TestClass2View1);
+		
+		assertEquals(testClass2.getInitializedCount(), 1);
+	}
+	
+	public function testThatCircularDependencyIsResolved() : Void 
+	{
+		System.register(TestClass3, [TestClass3View1]);
+		System.register(TestClass4, [TestClass4View1]);
+		
+		// the TestClass3 instance should now have a reference to the TestClass4 !
+		var testClass4:TestClass4View1 = System.get(TestClass4View1);
+		var testClass3:TestClass3View1 = System.get(TestClass3View1);
+		
+		assertEquals(testClass4.getDependencyTestClass3(), System.get(TestClass3View1));
+		assertEquals(testClass3.getDependencyTestClass4(), System.get(TestClass4View1));		
+		assertEquals(testClass4.getInitializedCount(), 1);
 	}
 }

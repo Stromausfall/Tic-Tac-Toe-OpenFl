@@ -1,8 +1,16 @@
 package;
 
 
+import net.matthiasauer.di.Component;
 import openfl.display.Sprite;
+import net.matthiasauer.di.System;
 
+class Foo implements Component {
+	
+	public function initializeComponent() : Void {
+		
+	}
+}
 
 class Main extends Sprite {
 	
@@ -12,6 +20,7 @@ class Main extends Sprite {
 		
 		super ();
 		
+		System.register(Foo, []);
 		
 		
 	}
