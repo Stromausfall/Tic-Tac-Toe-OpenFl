@@ -1,5 +1,6 @@
 package;
 import net.matthiasauer.di.SystemTest;
+import net.matthiasauer.tictactoe.model.GameBoardTest;
 import net.matthiasauer.tictactoe.model.GameTileTest;
 
 /**
@@ -17,6 +18,7 @@ class TestMain
 		
 		// test Model
 		r.add(new GameTileTest());
+		r.add(new GameBoardTest());
 		
 		r.run();
 	}
