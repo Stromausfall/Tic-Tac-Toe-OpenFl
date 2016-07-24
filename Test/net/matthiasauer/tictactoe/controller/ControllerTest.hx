@@ -5,7 +5,10 @@ import net.matthiasauer.di.System;
 import net.matthiasauer.di.SystemForMocks;
 import net.matthiasauer.tictactoe.model.GameBoard;
 import mockatoo.Mockatoo.*;
+import net.matthiasauer.tictactoe.model.GameTile;
 import net.matthiasauer.tictactoe.model.IGameBoard;
+import net.matthiasauer.tictactoe.model.IGameTile;
+import net.matthiasauer.tictactoe.model.Player;
 using mockatoo.Mockatoo;
 
 /**
@@ -46,4 +49,19 @@ class ControllerTest extends TestCase
 		assertEquals(43, retrievedVerticalTilesCount);
 	}
 	
+	public function testGetTileOwner()
+	{
+		var mockedGameBoard:GameBoard = mock(GameBoard);
+		var controller:IController = getIControllerFromSetup(mockedGameBoard);
+		var owner:Player = Player.Computer;
+		
+		// define what should be returned from the GameBoard
+		var tileToReturn:GameTile = new GameTile(2, 1);
+		tileToReturn.setOwner(owner);
+		mockedGameBoard.getTile(2, 1).returns(tileToReturn);
+		
+		var retrievedOwner = controller.getTileOwner(2, 1);
+		
+		assertEquals(owner, retrievedOwner);
+	}
 }

@@ -18,6 +18,7 @@
   <classpaths>
     <class path="C:\HaxeToolkit\haxe\lib\openfl\4,0,0" />
     <class path="C:\HaxeToolkit\haxe\lib\lime\3,0,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\svg\1,0,9" />
     <class path="C:\HaxeToolkit\haxe\lib\mockatoo\3,2,1" />
     <class path="C:\HaxeToolkit\haxe\lib\mconsole\1,6,0" />
     <class path="Source" />
@@ -28,7 +29,7 @@
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="openfl=4.0.0&#xA;lime=3.0.0&#xA;mockatoo=3.2.1&#xA;mconsole=1.6.0&#xA;tools=3.0.0&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;openfl-native&#xA;windows&#xA;desktop&#xA;display" />
+    <option directives="openfl=4.0.0&#xA;lime=3.0.0&#xA;svg=1.0.9&#xA;mockatoo=3.2.1&#xA;mconsole=1.6.0&#xA;tools=3.0.0&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;openfl-native&#xA;windows&#xA;desktop&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />

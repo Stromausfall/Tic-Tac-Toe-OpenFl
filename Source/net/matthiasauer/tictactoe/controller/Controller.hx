@@ -2,6 +2,7 @@ package net.matthiasauer.tictactoe.controller;
 import net.matthiasauer.di.Component;
 import net.matthiasauer.di.ISystem;
 import net.matthiasauer.tictactoe.model.IGameBoard;
+import net.matthiasauer.tictactoe.model.Player;
 
 /**
  * ...
@@ -29,5 +30,10 @@ class Controller implements Component implements IController
 	public function initializeComponent(system:ISystem) : Void
 	{
 		this.gameBoard = system.get(IGameBoard);
+	}
+	
+	public function getTileOwner(x:Int, y:Int) : Player
+	{
+		return this.gameBoard.getTile(x, y).getOwner();
 	}
 }

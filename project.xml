@@ -8,6 +8,10 @@
 	<source path="Test" />
 	
 	<haxelib name="openfl" />
+	<haxelib name="svg" />
+	
+	
+	
 	<haxelib name="mockatoo" />
 	
 	<assets path="Assets" rename="assets" />
