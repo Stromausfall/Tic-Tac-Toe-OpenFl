@@ -64,4 +64,18 @@ class GameBoardTest extends TestCase
 		assertTrue(allExceptionsThrown);
 		assertTrue(correctExceptionMessageThrown);
 	}
+	
+	public function testGetHorizontalTilesCount() {
+		var testBoard:IGameBoard = new GameBoard();
+		
+		// it should be hardcoded to 3
+		assertEquals(3, testBoard.getHorizontalTilesCount());
+	}
+	
+	public function testGetVerticalTilesCount() {
+		var testBoard:IGameBoard = new GameBoard();
+		
+		// it should be hardcoded to 3
+		assertEquals(3, testBoard.getVerticalTilesCount());
+	}
 }

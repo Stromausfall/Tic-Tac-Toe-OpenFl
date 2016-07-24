@@ -4,7 +4,7 @@ package net.matthiasauer.tictactoe.model;
  * The tile belongs to a player and is located at a specific position
  * @author Matthias Auer
  */
-class GameTile
+class GameTile implements IGameTile
 {
 	private var x:Int;
 	private var y:Int;

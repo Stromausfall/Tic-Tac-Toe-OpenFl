@@ -8,6 +8,7 @@
 	<source path="Test" />
 	
 	<haxelib name="openfl" />
+	<haxelib name="mockatoo" />
 	
 	<assets path="Assets" rename="assets" />
 	

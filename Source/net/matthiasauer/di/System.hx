@@ -6,45 +6,20 @@ import haxe.ds.ObjectMap;
  * ...
  * @author Matthias Auer
  */
-class System
+class System implements ISystem
 {
-	private static var instance:System = new System();
 	private var mappings:Map<String, Class<Dynamic>>;
 	private var instances:Map<String, Dynamic>;
 	private var toBeInitialized:Map<String, Bool>;
 	
-	private function new() 
+	public function new() 
 	{
 		mappings = new Map<String, Class<Dynamic>>();
 		instances = new Map<String, Dynamic>();
 		toBeInitialized = new Map<String, Bool>();
 	}
 	
-	/**
-	 * Registers a class and the views it implements
-	 * @param	clazz the clazz for which an instancet should be offered by the system
-	 * @param	views the views (as well as the class itself) using which the instance should be retrievable
-	 */
-	public static function register(clazz:Class<Component>, views:Array<Class<ComponentView>>) : Void
-	{
-		instance.registerImplementation(clazz, views);
-	}
-	
-	/**
-	 * Returns the unique instance that offers the view given as argument
-	 */
-	public static function get<T:ComponentView>(view:Class<T>) : T {
-		return instance.getImplementation(view);
-	}
-	
-	/**
-	 * Removes all data from the system
-	 */
-	public static function clear() {
-		instance = new System();
-	}
-	
-	private function registerImplementation(clazz:Class<Component>, views:Array<Class<ComponentView>>) : Void
+	public function register(clazz:Class<Component>, views:Array<Class<ComponentView>>) : Void
 	{
 		// the basic mapping - it to itself
 		registerView(clazz, clazz);
@@ -56,7 +31,7 @@ class System
 		}
 	}
 	
-	private function getImplementation<T:ComponentView>(view:Class<T>) : T {
+	public function get<T:ComponentView>(view:Class<T>) : T {
 		// get the clazz mapped by the view
 		var clazzToInstantiate:Class<Dynamic> = getClazzForView(view);
 		
@@ -109,7 +84,7 @@ class System
 		if (toBeInitialized.remove(clazzToInstantiateClazzName))
 		{
 			// initialize the component - exactly once !
-			instance.initializeComponent();
+			instance.initializeComponent(this);
 		}
 	}
 }
