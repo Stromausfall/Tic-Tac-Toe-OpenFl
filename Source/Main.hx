@@ -2,7 +2,8 @@ package;
 
 import net.matthiasauer.di.Component;
 import net.matthiasauer.di.ISystem;
-import net.matthiasauer.tictactoe.view.SVGExample;
+import net.matthiasauer.tictactoe.view.SVGFacade;
+import net.matthiasauer.tictactoe.model.Player;
 import openfl.display.Sprite;
 import net.matthiasauer.di.System;
 import flash.events.Event;
@@ -27,7 +28,17 @@ class Main extends Sprite {
 	public function new () {
 		super ();
 		
-		this.addChild(new SVGExample());
+		this.addChild(SVGFacade.createGameBoard());
+		this.addChild(SVGFacade.createGameTile(Player.Computer, 0, 0));
+		this.addChild(SVGFacade.createGameTile(Player.Human, 0, 1));
+		this.addChild(SVGFacade.createGameTile(Player.Computer, 0, 2));
+		this.addChild(SVGFacade.createGameTile(Player.Human, 1, 0));
+		this.addChild(SVGFacade.createGameTile(Player.Computer, 1, 1));
+		this.addChild(SVGFacade.createGameTile(Player.Human, 1, 2));
+		this.addChild(SVGFacade.createGameTile(Player.Computer, 2, 0));
+		this.addChild(SVGFacade.createGameTile(Player.Human, 2, 1));
+		this.addChild(SVGFacade.createGameTile(Player.Computer, 2, 2));
+		
 		
 		this.originalHeight = stage.stageHeight;
 		this.originalWidth = stage.stageWidth;
