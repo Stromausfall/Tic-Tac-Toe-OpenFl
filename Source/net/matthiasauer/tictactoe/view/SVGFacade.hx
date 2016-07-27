@@ -1,6 +1,5 @@
 package net.matthiasauer.tictactoe.view;
 import net.matthiasauer.tictactoe.model.Player;
-import openfl.events.MouseEvent;
 
 /**
  * ...
@@ -38,21 +37,13 @@ class SVGFacade
 	public static function createGameTile(player:Player, x:Int, y:Int) : SVGElement
 	{
 		// create and initialize
-		var element:SVGElement = new SVGElement(getGameTileAssetName(player)).initialize();
+		var element:SVGElement = new ClickableSVGElement<String>(getGameTileAssetName(player), x + "-" + y).initialize();
 		
 		// position it
 		var offset:Int = 200;
 		element.x += offset * x -  offset;
 		element.y += 300 + offset * y - offset ;
 		
-		// make clickable
-		element.addEventListener(MouseEvent.CLICK, click);
-		
 		return element;
-	}
-	
-	public static function click(e:Dynamic)
-	{
-		trace("test");
 	}
 }
