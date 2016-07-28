@@ -28,6 +28,9 @@ class Main extends Sprite {
 	public function new () {
 		super ();
 		
+		
+		TestMain.main();
+		
 		this.addChild(SVGFacade.createGameBoard());
 		this.addChild(SVGFacade.createGameTile(Player.Computer, 0, 0));
 		this.addChild(SVGFacade.createGameTile(Player.Human, 0, 1));
