@@ -6,4 +6,5 @@ package net.matthiasauer.tictactoe.model;
 interface IGameTile 
 {
 	function getOwner() : Player;
+	function addObserver(observer:Void->Void) : Void;
 }

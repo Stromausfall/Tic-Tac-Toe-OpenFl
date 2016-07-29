@@ -18,14 +18,14 @@ class GameBoard implements IGameBoard implements Component
 		tiles = [for (x in 0...this.horizontalTilesCount) [for (y in 0...this.verticalTilesCount) new GameTile(x, y)]];
 	}
 	
-	public function getTile(x:Int, y:Int) : GameTile 
+	public function getTile(x:Int, y:Int) : IGameTile 
 	{
 		// if the coordinates are wrong
 		if ((x < 0) || (x >= this.horizontalTilesCount) || (y < 0) || (y >= this.verticalTilesCount)) {
 			throw "Invalid coordinates of GameTile (" + x + "," + y + ")";
 		}
 		
-		return tiles[x][y];
+		return this.tiles[x][y];
 	}
 	
 	public function getHorizontalTilesCount() : Int
@@ -36,6 +36,11 @@ class GameBoard implements IGameBoard implements Component
 	public function getVerticalTilesCount() : Int
 	{
 		return this.verticalTilesCount;
+	}
+	
+	public function changeOwner(x:Int, y:Int, newOwner:Player) : Void
+	{
+		this.tiles[x][y].setOwner(newOwner);
 	}
 	
 	public function initializeComponent(system:ISystem) : Void

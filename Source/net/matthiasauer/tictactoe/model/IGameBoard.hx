@@ -23,4 +23,12 @@ interface IGameBoard extends ComponentView
 	 * @return the height of the game board in number of tiles
 	 */
 	function getVerticalTilesCount() : Int;
+	
+	/**
+	 * Changes the owner of a tile on the gameboard
+	 * @param	x
+	 * @param	y
+	 * @param	newOwner
+	 */
+	function changeOwner(x:Int, y:Int, newOwner:Player) : Void;
 }

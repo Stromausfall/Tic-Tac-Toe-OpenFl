@@ -23,11 +23,11 @@ class GameBoardTest extends TestCase
 	{
 		var testBoard:GameBoard = new GameBoard();
 		
-		var lastTile:GameTile = null;
+		var lastTile:IGameTile = null;
 		
 		for (x in 0...3) {
 			for (y in 0...3) {
-				var currentTile:GameTile = testBoard.getTile(x, y);
+				var currentTile:IGameTile = testBoard.getTile(x, y);
 				
 				// the tiles are different
 				assertTrue(currentTile != lastTile);
@@ -77,5 +77,51 @@ class GameBoardTest extends TestCase
 		
 		// it should be hardcoded to 3
 		assertEquals(3, testBoard.getVerticalTilesCount());
+	}
+	
+	public function testThatChangingOwnerIsCorrect() {
+		var testBoard:IGameBoard = new GameBoard();
+		
+		// first test that all tiles are correctly initialized
+		for (x in 0...3) {
+			for (y in 0...3) {
+				var owner:Player = testBoard.getTile(x, y).getOwner();
+				
+				assertEquals(Player.None, owner);
+			}
+		}
+		
+		// now change a tile
+		testBoard.changeOwner(2, 1, Player.Computer);
+		var nonePlayerOwnedTiles:Int = 0;
+		
+		for (x in 0...3) {
+			for (y in 0...3) {
+				if (testBoard.getTile(x, y).getOwner() == Player.None) {
+					nonePlayerOwnedTiles += 1;
+				}
+			}
+		}
+		
+		// make sure only one was changed
+		assertEquals(8, nonePlayerOwnedTiles);
+		
+		// make sure the correct tile has changed to the correct value
+		assertEquals(Player.Computer, testBoard.getTile(2, 1).getOwner());
+	}
+	
+	public function testThatChangingTheOwnerNotifiesListenersOfTheTile() {
+		var testBoard:IGameBoard = new GameBoard();
+		var notified:Bool = false;
+		
+		// add an observer
+		testBoard.getTile(2, 1).addObserver(function() { notified = true; });
+		
+		assertFalse(notified);
+		
+		testBoard.changeOwner(2, 1, Player.Computer);
+		
+		// expect that the observer was triggered
+		assertTrue(notified);
 	}
 }
