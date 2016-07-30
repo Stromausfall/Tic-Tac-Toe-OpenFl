@@ -45,6 +45,5 @@ class GameBoard implements IGameBoard implements Component
 	
 	public function initializeComponent(system:ISystem) : Void
 	{
-		
 	}
 }

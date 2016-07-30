@@ -2,8 +2,11 @@ package;
 
 import net.matthiasauer.di.Component;
 import net.matthiasauer.di.ISystem;
-import net.matthiasauer.tictactoe.view.SVGFacade;
+import net.matthiasauer.tictactoe.view.GameView;
+import net.matthiasauer.tictactoe.view.svgelement.SVGFacade;
 import net.matthiasauer.tictactoe.model.Player;
+import net.matthiasauer.tictactoe.model.GameBoard;
+import net.matthiasauer.tictactoe.model.IGameBoard;
 import openfl.display.Sprite;
 import net.matthiasauer.di.System;
 import flash.events.Event;
@@ -31,16 +34,15 @@ class Main extends Sprite {
 		
 		TestMain.main();
 		
-		this.addChild(SVGFacade.createGameBoard());
-		this.addChild(SVGFacade.createGameTile(Player.Computer, 0, 0));
-		this.addChild(SVGFacade.createGameTile(Player.Human, 0, 1));
-		this.addChild(SVGFacade.createGameTile(Player.Computer, 0, 2));
-		this.addChild(SVGFacade.createGameTile(Player.Human, 1, 0));
-		this.addChild(SVGFacade.createGameTile(Player.Computer, 1, 1));
-		this.addChild(SVGFacade.createGameTile(Player.Human, 1, 2));
-		this.addChild(SVGFacade.createGameTile(Player.Computer, 2, 0));
-		this.addChild(SVGFacade.createGameTile(Player.Human, 2, 1));
-		this.addChild(SVGFacade.createGameTile(Player.Computer, 2, 2));
+		var system:ISystem = new System();
+		system.register(GameView, []);
+		system.register(GameBoard, [IGameBoard, GameBoard]);
+		
+		var gameView:GameView = system.get(GameView);
+		
+		this.addChild(gameView);
+		gameView.setUp();
+		
 		
 		
 		this.originalHeight = stage.stageHeight;
