@@ -92,7 +92,7 @@ class GameBoardTest extends TestCase
 		}
 		
 		// now change a tile
-		testBoard.changeOwner(2, 1, Player.Computer);
+		testBoard.changeOwner(2, 1, Player.Player2);
 		var nonePlayerOwnedTiles:Int = 0;
 		
 		for (x in 0...3) {
@@ -107,7 +107,7 @@ class GameBoardTest extends TestCase
 		assertEquals(8, nonePlayerOwnedTiles);
 		
 		// make sure the correct tile has changed to the correct value
-		assertEquals(Player.Computer, testBoard.getTile(2, 1).getOwner());
+		assertEquals(Player.Player2, testBoard.getTile(2, 1).getOwner());
 	}
 	
 	public function testThatChangingTheOwnerNotifiesListenersOfTheTile() {
@@ -119,7 +119,7 @@ class GameBoardTest extends TestCase
 		
 		assertFalse(notified);
 		
-		testBoard.changeOwner(2, 1, Player.Computer);
+		testBoard.changeOwner(2, 1, Player.Player2);
 		
 		// expect that the observer was triggered
 		assertTrue(notified);

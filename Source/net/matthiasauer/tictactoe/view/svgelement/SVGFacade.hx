@@ -30,9 +30,9 @@ class SVGFacade
 	private static function getGameTileAssetName(player:Player) : String 
 	{
 		switch(player) {
-			case Player.Computer:
+			case Player.Player2:
 				return "circle.svg";
-			case Player.Human:
+			case Player.Player1:
 				return "cross.svg";
 			case Player.None:
 				return "none.svg";

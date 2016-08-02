@@ -6,6 +6,6 @@ package net.matthiasauer.tictactoe.model;
 enum Player 
 {
 	None;
-	Human;
-	Computer;
+	Player1;
+	Player2;
 }

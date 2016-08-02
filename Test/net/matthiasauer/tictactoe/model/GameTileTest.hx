@@ -27,8 +27,8 @@ class GameTileTest extends TestCase
 		var tile:GameTile = new GameTile(2, 1);
 		assertEquals(tile.getOwner(), Player.None);
 		
-		tile.setOwner(Player.Human);
-		assertEquals(tile.getOwner(), Player.Human);
+		tile.setOwner(Player.Player1);
+		assertEquals(tile.getOwner(), Player.Player1);
 	}
 	
 	public function testThatNoneOwnerCannotBeSet() : Void
@@ -62,11 +62,11 @@ class GameTileTest extends TestCase
 	public function testThatOwnerCanOnlyBeAssignedOnce() : Void
 	{
 		var tile:GameTile = new GameTile(2, 1);
-		tile.setOwner(Player.Human);
+		tile.setOwner(Player.Player1);
 		var exceptionThrown:Bool = false;
 		
 		try {
-			tile.setOwner(Player.Computer);
+			tile.setOwner(Player.Player2);
 		} catch(msg : String) {
 			exceptionThrown = true;
 		}

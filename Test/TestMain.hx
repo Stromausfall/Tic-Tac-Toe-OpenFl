@@ -3,6 +3,8 @@ import net.matthiasauer.di.SystemForMocks;
 import net.matthiasauer.di.SystemForMocksTest;
 import net.matthiasauer.di.SystemTest;
 import net.matthiasauer.observer.ObserverTest;
+import net.matthiasauer.tictactoe.controller.ControllerTest;
+import net.matthiasauer.tictactoe.controller.player.HumanTest;
 import net.matthiasauer.tictactoe.model.GameBoardTest;
 import net.matthiasauer.tictactoe.model.GameTileTest;
 
@@ -28,6 +30,8 @@ class TestMain
 		r.add(new GameBoardTest());
 		
 		// test Controller
+		r.add(new ControllerTest());
+		r.add(new HumanTest());
 		
 		r.run();
 	}
