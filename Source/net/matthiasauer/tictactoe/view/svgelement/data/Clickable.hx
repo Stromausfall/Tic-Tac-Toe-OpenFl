@@ -7,13 +7,13 @@ import openfl.events.MouseEvent;
  * ...
  * @author Matthias Auer
  */
-class Clickable<T> implements IData
+class Clickable implements IData
 {
-	private var identifier:T;
+	private var clickFunction:Void->Void;
 	
-	public function new(identifier:T) 
+	public function new(clickFunction:Void->Void) 
 	{
-		this.identifier = identifier;
+		this.clickFunction = clickFunction;
 	}
 	
 	public function initialize(svgElement:SVGElement, shape:Shape, svg:SVG) : Void
@@ -24,6 +24,6 @@ class Clickable<T> implements IData
 	
 	private function click(e:Dynamic) : Void
 	{
-		trace("clicked: " + this.identifier);
+		this.clickFunction();
 	}
 }

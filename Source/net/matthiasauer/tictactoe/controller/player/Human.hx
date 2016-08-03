@@ -10,6 +10,7 @@ class Human implements IPlayer
 {
 	private var id:Player;
 	private var gameBoard:IGameBoard;
+	private var observer:PlayerStatus->Void;
 
 	public function new(player:Player, gameBoard:IGameBoard) 
 	{
@@ -23,6 +24,8 @@ class Human implements IPlayer
 		if (this.gameBoard.getTile(x, y).getOwner() == Player.None)
 		{
 			this.gameBoard.changeOwner(x, y, this.id);
+			
+			this.observer(PlayerStatus.FINISHED_TURN);
 		}
 	}
 	
@@ -33,6 +36,6 @@ class Human implements IPlayer
 	
 	public function addObserver(observeFunction:PlayerStatus->Void) : Void
 	{
-		
+		this.observer = observeFunction;
 	}
 }

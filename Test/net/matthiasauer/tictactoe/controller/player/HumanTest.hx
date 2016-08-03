@@ -23,6 +23,7 @@ class HumanTest extends TestCase
 	{
 		var mockedGameBoard:GameBoard = Mockatoo.mock(GameBoard);
 		var player:IPlayer = new Human(Player.Player1, mockedGameBoard);
+		player.addObserver(function(playerStatus:PlayerStatus) {});
 		
 		mockedGameBoard.getTile(1, 2).returns(new GameTile(1, 2));
 		
@@ -66,5 +67,23 @@ class HumanTest extends TestCase
 		mockedGameBoard.changeOwner(1, 2, Player.Player1).verify(0);
 		
 		assertTrue(true);
+	}
+	
+	public function testThatClickingValidTileAlsoCallsTheObserverThatTurnHasFinished()
+	{
+		var mockedGameBoard:GameBoard = Mockatoo.mock(GameBoard);
+		var player:IPlayer = new Human(Player.Player1, mockedGameBoard);
+		var freeTile = new GameTile(1, 2);
+		var observedStatus:PlayerStatus = PlayerStatus.UNFINISHED_TURN;
+		var observeFunction:PlayerStatus->Void = function(playerStatus:PlayerStatus) { observedStatus = playerStatus; };
+		
+		player.addObserver(observeFunction);
+		
+		mockedGameBoard.getTile(1, 2).returns(freeTile);
+		
+		// mimick a user interacting with the UI
+		player.notifyTileClick(1, 2);
+		
+		assertEquals(PlayerStatus.FINISHED_TURN, observedStatus);
 	}
 }

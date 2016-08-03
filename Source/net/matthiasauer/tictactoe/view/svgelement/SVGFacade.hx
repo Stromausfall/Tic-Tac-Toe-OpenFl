@@ -1,4 +1,5 @@
 package net.matthiasauer.tictactoe.view.svgelement;
+import net.matthiasauer.tictactoe.controller.IController;
 import net.matthiasauer.tictactoe.model.IGameBoard;
 import net.matthiasauer.tictactoe.model.Player;
 import net.matthiasauer.tictactoe.view.svgelement.SVGElement;
@@ -41,14 +42,14 @@ class SVGFacade
 		}
 	}
 	
-	public static function createGameTile(player:Player, x:Int, y:Int) : SVGElement
+	public static function createGameTile(player:Player, x:Int, y:Int, controller:IController) : SVGElement
 	{
 		// create and initialize
 		var element:SVGElement = new SVGElement(getGameTileAssetName(player));
 		
 		if (player == Player.None)
 		{
-			element.addData(new Clickable<String>(x + "-" + y));
+			element.addData(new Clickable(function() { controller.notifyTileClick(x, y); }));
 			element.addData(new Fading());
 		}
 		
