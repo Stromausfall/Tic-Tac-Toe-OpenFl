@@ -2,6 +2,7 @@ package;
 
 import net.matthiasauer.di.Component;
 import net.matthiasauer.di.ISystem;
+import net.matthiasauer.tictactoe.controller.player.Computer;
 import net.matthiasauer.tictactoe.controller.player.Human;
 import net.matthiasauer.tictactoe.view.GameView;
 import net.matthiasauer.tictactoe.view.svgelement.SVGFacade;
@@ -46,7 +47,7 @@ class Main extends Sprite {
 		var controller:IController = system.get(IController);
 		var gameBoard:IGameBoard = system.get(IGameBoard);
 		
-		controller.setPlayers(new Human(Player.Player1, gameBoard), new Human(Player.Player2, gameBoard));
+		controller.setPlayers(new Human(Player.Player1, gameBoard), new Computer(Player.Player2, gameBoard));
 		
 		this.addChild(gameView);
 		gameView.setUp();
