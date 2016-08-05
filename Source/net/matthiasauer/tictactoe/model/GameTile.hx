@@ -8,24 +8,12 @@ import net.matthiasauer.observer.Observable;
 class GameTile implements IGameTile
 {
 	private var observable:Observable<Bool>;
-	private var x:Int;
-	private var y:Int;
 	private var owner:Player;
 
-	public function new(x:Int, y:Int) 
+	public function new() 
 	{
-		this.x = x;
-		this.y = y;
 		this.owner = Player.None;
 		this.observable = new Observable<Bool>();
-	}
-	
-	public function getX() : Int {
-		return this.x;
-	}
-	
-	public function getY() : Int {
-		return this.y;
 	}
 	
 	public function getOwner() : Player {

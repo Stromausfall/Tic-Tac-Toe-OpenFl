@@ -1,7 +1,9 @@
 package net.matthiasauer.tictactoe.view.svgelement;
 import format.SVG;
-import net.matthiasauer.tictactoe.view.svgelement.data.IData;
+import net.matthiasauer.tictactoe.view.element.ViewElement;
+import net.matthiasauer.tictactoe.view.element.data.IData;
 import openfl.Assets;
+import openfl.display.DisplayObject;
 import openfl.display.Shape;
 import openfl.display.Sprite;
 
@@ -9,26 +11,30 @@ import openfl.display.Sprite;
  * ...
  * @author Matthias Auer
  */
-class SVGElement extends Sprite
+class SVGElement extends ViewElement
 {
 	private var assetName:String;
 	private var shape:Shape;
 	private var svg:SVG;
-	private var data:Array<IData>;
 
 	public function new(assetName:String) 
-	{
+	{	
 		super();
 		
 		this.assetName = assetName;
-		this.data = new Array<IData>();
+	}
+	
+	override private function getDisplayObject() : DisplayObject
+	{
+		return this.shape;
 	}
 	
 	public function initialize() : SVGElement
-	{
+	{		
 		// create the SVG
 		this.svg = new SVG(Assets.getText("assets/" + this.assetName));
 		this.shape = new Shape();
+		
 		this.svg.render(this.shape.graphics);
 		
 		// center the SVG
@@ -38,17 +44,6 @@ class SVGElement extends Sprite
 		// add it to the element
 		this.addChild(this.shape);
 		
-		// initialize the data elements (these can add extra functionality)
-		for (dataElement in this.data)
-		{
-			dataElement.initialize(this, this.shape, this.svg);
-		}
-		
 		return this;
-	}
-	
-	public function addData(dataElement : IData)
-	{
-		this.data.push(dataElement);
 	}
 }

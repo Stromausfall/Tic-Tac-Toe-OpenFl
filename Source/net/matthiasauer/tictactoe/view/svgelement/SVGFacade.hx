@@ -3,8 +3,8 @@ import net.matthiasauer.tictactoe.controller.IController;
 import net.matthiasauer.tictactoe.model.IGameBoard;
 import net.matthiasauer.tictactoe.model.Player;
 import net.matthiasauer.tictactoe.view.svgelement.SVGElement;
-import net.matthiasauer.tictactoe.view.svgelement.data.Clickable;
-import net.matthiasauer.tictactoe.view.svgelement.data.Fading;
+import net.matthiasauer.tictactoe.view.element.data.Clickable;
+import net.matthiasauer.tictactoe.view.element.data.Fading;
 import openfl.events.Event;
 
 /**
@@ -47,13 +47,13 @@ class SVGFacade
 		// create and initialize
 		var element:SVGElement = new SVGElement(getGameTileAssetName(player));
 		
+		element.initialize();
+		
 		if (player == Player.None)
 		{
 			element.addData(new Clickable(function() { controller.notifyTileClick(x, y); }));
 			element.addData(new Fading());
 		}
-		
-		element.initialize();
 		
 		// position it
 		var offset:Int = 200;

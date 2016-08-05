@@ -27,7 +27,7 @@ class ComputerTest extends TestCase
 		
 		mockedGameBoard.getHorizontalTilesCount().returns(3);
 		mockedGameBoard.getVerticalTilesCount().returns(3);
-		mockedGameBoard.getTile(cast anyInt, cast anyInt).returns(new GameTile(1, 2));
+		mockedGameBoard.getTile(cast anyInt, cast anyInt).returns(new GameTile());
 		
 		// mimick a user interacting with the UI
 		player.startTurn();
@@ -42,8 +42,8 @@ class ComputerTest extends TestCase
 		var mockedGameBoard:GameBoard = Mockatoo.mock(GameBoard);
 		var player:IPlayer = new Computer(Player.Player2, mockedGameBoard);
 		player.addObserver(function(playerStatus:PlayerStatus) {});
-		var freeTile:GameTile = new GameTile(1, 2);
-		var usedTile:GameTile = new GameTile(1, 2);
+		var freeTile:GameTile = new GameTile();
+		var usedTile:GameTile = new GameTile();
 		usedTile.setOwner(Player.Player2);
 		
 		mockedGameBoard.getHorizontalTilesCount().returns(3);
@@ -79,7 +79,7 @@ class ComputerTest extends TestCase
 		
 		mockedGameBoard.getHorizontalTilesCount().returns(3);
 		mockedGameBoard.getVerticalTilesCount().returns(3);
-		mockedGameBoard.getTile(cast anyInt, cast anyInt).returns(new GameTile(1, 2));
+		mockedGameBoard.getTile(cast anyInt, cast anyInt).returns(new GameTile());
 		
 		// mimick a user interacting with the UI
 		assertFalse(turnFinished);

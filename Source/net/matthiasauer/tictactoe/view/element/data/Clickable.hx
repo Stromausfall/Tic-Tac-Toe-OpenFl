@@ -1,6 +1,5 @@
-package net.matthiasauer.tictactoe.view.svgelement.data;
-import format.SVG;
-import openfl.display.Shape;
+package net.matthiasauer.tictactoe.view.element.data;
+import openfl.display.DisplayObject;
 import openfl.events.MouseEvent;
 
 /**
@@ -16,10 +15,10 @@ class Clickable implements IData
 		this.clickFunction = clickFunction;
 	}
 	
-	public function initialize(svgElement:SVGElement, shape:Shape, svg:SVG) : Void
+	public function initialize(viewElement:ViewElement, shape:DisplayObject) : Void
 	{
 		// make clickable
-		svgElement.addEventListener(MouseEvent.CLICK, this.click);
+		viewElement.addEventListener(MouseEvent.CLICK, this.click);
 	}
 	
 	private function click(e:Dynamic) : Void

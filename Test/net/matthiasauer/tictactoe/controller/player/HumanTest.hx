@@ -25,7 +25,7 @@ class HumanTest extends TestCase
 		var player:IPlayer = new Human(Player.Player1, mockedGameBoard);
 		player.addObserver(function(playerStatus:PlayerStatus) {});
 		
-		mockedGameBoard.getTile(1, 2).returns(new GameTile(1, 2));
+		mockedGameBoard.getTile(1, 2).returns(new GameTile());
 		
 		// mimick a user interacting with the UI
 		player.notifyTileClick(1, 2);
@@ -39,7 +39,7 @@ class HumanTest extends TestCase
 	{
 		var mockedGameBoard:GameBoard = Mockatoo.mock(GameBoard);
 		var player:IPlayer = new Human(Player.Player1, mockedGameBoard);
-		var alreadyOccupiedTile = new GameTile(1, 2);
+		var alreadyOccupiedTile = new GameTile();
 		alreadyOccupiedTile.setOwner(Player.Player1);
 		
 		mockedGameBoard.getTile(1, 2).returns(alreadyOccupiedTile);
@@ -56,7 +56,7 @@ class HumanTest extends TestCase
 	{
 		var mockedGameBoard:GameBoard = Mockatoo.mock(GameBoard);
 		var player:IPlayer = new Human(Player.Player1, mockedGameBoard);
-		var alreadyOccupiedTile = new GameTile(1, 2);
+		var alreadyOccupiedTile = new GameTile();
 		alreadyOccupiedTile.setOwner(Player.Player2);
 		
 		mockedGameBoard.getTile(1, 2).returns(alreadyOccupiedTile);
@@ -73,7 +73,7 @@ class HumanTest extends TestCase
 	{
 		var mockedGameBoard:GameBoard = Mockatoo.mock(GameBoard);
 		var player:IPlayer = new Human(Player.Player1, mockedGameBoard);
-		var freeTile = new GameTile(1, 2);
+		var freeTile = new GameTile();
 		var observedStatus:PlayerStatus = PlayerStatus.UNFINISHED_TURN;
 		var observeFunction:PlayerStatus->Void = function(playerStatus:PlayerStatus) { observedStatus = playerStatus; };
 		

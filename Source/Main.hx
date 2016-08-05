@@ -48,6 +48,7 @@ class Main extends Sprite {
 		var gameBoard:IGameBoard = system.get(IGameBoard);
 		
 		controller.setPlayers(new Human(Player.Player1, gameBoard), new Computer(Player.Player2, gameBoard));
+		//controller.setPlayers(new Computer(Player.Player1, gameBoard), new Computer(Player.Player2, gameBoard));
 		
 		this.addChild(gameView);
 		gameView.setUp();
@@ -58,6 +59,9 @@ class Main extends Sprite {
 		this.originalWidth = stage.stageWidth;
 		
 		stage.addEventListener (Event.RESIZE, stage_onResize);
+		
+		
+		controller.startGame();
 	}
 	
 	

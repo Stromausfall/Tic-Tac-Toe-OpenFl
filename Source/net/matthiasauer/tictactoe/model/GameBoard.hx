@@ -15,7 +15,7 @@ class GameBoard implements IGameBoard implements Component
 	public function new() 
 	{
 		// initialize the tiles
-		tiles = [for (x in 0...this.horizontalTilesCount) [for (y in 0...this.verticalTilesCount) new GameTile(x, y)]];
+		tiles = [for (x in 0...this.horizontalTilesCount) [for (y in 0...this.verticalTilesCount) new GameTile()]];
 	}
 	
 	public function getTile(x:Int, y:Int) : IGameTile 

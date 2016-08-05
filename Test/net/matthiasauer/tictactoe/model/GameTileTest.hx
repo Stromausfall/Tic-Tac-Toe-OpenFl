@@ -6,25 +6,17 @@ import haxe.unit.TestCase;
  * @author Matthias Auer
  */
 class GameTileTest extends TestCase
-{
-	public function testCheckXAndYCoordinates() : Void
-	{
-		var tile:GameTile = new GameTile(2, 1);
-		
-		assertEquals(2, tile.getX());
-		assertEquals(1, tile.getY());
-	}
-	
+{	
 	public function testInitialPlayer() : Void
 	{
-		var tile:GameTile = new GameTile(2, 1);
+		var tile:GameTile = new GameTile();
 		
 		assertEquals(tile.getOwner(), Player.None);
 	}
 	
 	public function testSetPlayer() : Void
 	{
-		var tile:GameTile = new GameTile(2, 1);
+		var tile:GameTile = new GameTile();
 		assertEquals(tile.getOwner(), Player.None);
 		
 		tile.setOwner(Player.Player1);
@@ -33,7 +25,7 @@ class GameTileTest extends TestCase
 	
 	public function testThatNoneOwnerCannotBeSet() : Void
 	{
-		var tile:GameTile = new GameTile(2, 1);
+		var tile:GameTile = new GameTile();
 		var exceptionThrown:Bool = false;
 		
 		try {
@@ -47,7 +39,7 @@ class GameTileTest extends TestCase
 	
 	public function testThatNullCannotBeSetAsOwner() : Void
 	{
-		var tile:GameTile = new GameTile(2, 1);
+		var tile:GameTile = new GameTile();
 		var exceptionThrown:Bool = false;
 		
 		try {
@@ -61,7 +53,7 @@ class GameTileTest extends TestCase
 	
 	public function testThatOwnerCanOnlyBeAssignedOnce() : Void
 	{
-		var tile:GameTile = new GameTile(2, 1);
+		var tile:GameTile = new GameTile();
 		tile.setOwner(Player.Player1);
 		var exceptionThrown:Bool = false;
 		
