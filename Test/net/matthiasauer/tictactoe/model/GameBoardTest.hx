@@ -66,21 +66,21 @@ class GameBoardTest extends TestCase
 	}
 	
 	public function testGetHorizontalTilesCount() {
-		var testBoard:IGameBoard = new GameBoard();
+		var testBoard:IGameBoardForView = new GameBoard();
 		
 		// it should be hardcoded to 3
 		assertEquals(3, testBoard.getHorizontalTilesCount());
 	}
 	
 	public function testGetVerticalTilesCount() {
-		var testBoard:IGameBoard = new GameBoard();
+		var testBoard:IGameBoardForView = new GameBoard();
 		
 		// it should be hardcoded to 3
 		assertEquals(3, testBoard.getVerticalTilesCount());
 	}
 	
 	public function testThatChangingOwnerIsCorrect() {
-		var testBoard:IGameBoard = new GameBoard();
+		var testBoard:IGameBoardForController = new GameBoard();
 		
 		// first test that all tiles are correctly initialized
 		for (x in 0...3) {
@@ -111,7 +111,7 @@ class GameBoardTest extends TestCase
 	}
 	
 	public function testThatChangingTheOwnerNotifiesListenersOfTheTile() {
-		var testBoard:IGameBoard = new GameBoard();
+		var testBoard:IGameBoardForController = new GameBoard();
 		var notified:Bool = false;
 		
 		// add an observer
@@ -123,5 +123,19 @@ class GameBoardTest extends TestCase
 		
 		// expect that the observer was triggered
 		assertTrue(notified);
+	}
+	
+	public function testResetBoardResetsOwners() {
+		var testBoard:IGameBoardForModel = new GameBoard();
+		
+		testBoard.changeOwner(2, 0, Player.Player1);
+		testBoard.changeOwner(1, 1, Player.Player2);
+		testBoard.changeOwner(0, 2, Player.Player1);
+		
+		testBoard.resetBoard();
+		
+		assertEquals(Player.None, testBoard.getTile(2, 0).getOwner());
+		assertEquals(Player.None, testBoard.getTile(1, 1).getOwner());
+		assertEquals(Player.None, testBoard.getTile(0, 2).getOwner());
 	}
 }

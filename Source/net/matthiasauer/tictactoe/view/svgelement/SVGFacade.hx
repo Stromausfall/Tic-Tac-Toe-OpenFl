@@ -1,6 +1,6 @@
 package net.matthiasauer.tictactoe.view.svgelement;
 import net.matthiasauer.tictactoe.controller.IController;
-import net.matthiasauer.tictactoe.model.IGameBoard;
+import net.matthiasauer.tictactoe.model.IGameBoardForView;
 import net.matthiasauer.tictactoe.model.Player;
 import net.matthiasauer.tictactoe.view.svgelement.SVGElement;
 import net.matthiasauer.tictactoe.view.element.data.Clickable;

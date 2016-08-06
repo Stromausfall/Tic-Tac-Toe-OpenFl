@@ -3,7 +3,7 @@ package net.matthiasauer.di;
 /**
  * @author Matthias Auer
  */
-interface Component 
+interface IComponent 
 {
 	function initializeComponent(system:ISystem) : Void;
 }

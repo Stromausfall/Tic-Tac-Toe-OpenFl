@@ -1,10 +1,10 @@
 package net.matthiasauer.tictactoe.model;
-import net.matthiasauer.di.ComponentView;
+import net.matthiasauer.di.IComponentView;
 
 /**
  * @author Matthias Auer
  */
-interface IGameBoard extends ComponentView
+interface IGameBoardForView extends IComponentView
 {
 	/**
 	 * Returns the game tile at the position x,y
@@ -23,12 +23,4 @@ interface IGameBoard extends ComponentView
 	 * @return the height of the game board in number of tiles
 	 */
 	function getVerticalTilesCount() : Int;
-	
-	/**
-	 * Changes the owner of a tile on the gameboard
-	 * @param	x
-	 * @param	y
-	 * @param	newOwner
-	 */
-	function changeOwner(x:Int, y:Int, newOwner:Player) : Void;
 }

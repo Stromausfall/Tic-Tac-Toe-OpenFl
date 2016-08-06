@@ -1,15 +1,15 @@
 package net.matthiasauer.di;
 import haxe.unit.TestCase;
 
-interface TestClass1View1 extends ComponentView
+interface TestClass1View1 extends IComponentView
 {
 }
 
-interface TestClass1View2 extends ComponentView
+interface TestClass1View2 extends IComponentView
 {
 }
 
-class TestClass1 implements Component implements TestClass1View1 implements TestClass1View2
+class TestClass1 implements IComponent implements TestClass1View1 implements TestClass1View2
 {
 	public function new()
 	{	
@@ -20,17 +20,17 @@ class TestClass1 implements Component implements TestClass1View1 implements Test
 	}
 }
 
-interface TestClass2View1 extends ComponentView
+interface TestClass2View1 extends IComponentView
 {
 	function getDependencyTestClass1() : TestClass1View1;
 	function getInitializedCount() : Int;
 }
 
-interface TestClass2View2 extends ComponentView
+interface TestClass2View2 extends IComponentView
 {
 }
 
-class TestClass2 implements Component implements TestClass2View1 implements TestClass2View2
+class TestClass2 implements IComponent implements TestClass2View1 implements TestClass2View2
 {
 	private var dependency:TestClass1View1;
 	private var initializedCount:Int = 0;
@@ -56,12 +56,12 @@ class TestClass2 implements Component implements TestClass2View1 implements Test
 	}
 }
 
-interface TestClass3View1 extends ComponentView
+interface TestClass3View1 extends IComponentView
 {
 	function getDependencyTestClass4() : TestClass4View1;
 }
 
-class TestClass3 implements Component implements TestClass3View1
+class TestClass3 implements IComponent implements TestClass3View1
 {
 	private var dependency:TestClass4View1;
 	
@@ -80,13 +80,37 @@ class TestClass3 implements Component implements TestClass3View1
 	}
 }
 
-interface TestClass4View1 extends ComponentView
+interface TestClass4View1 extends IComponentView
 {
 	function getDependencyTestClass3() : TestClass3View1;
 	function getInitializedCount() : Int;
 }
 
-class TestClass4 implements Component implements TestClass4View1
+class TestClass5 implements IComponent implements TestClass5View1
+{
+	public function new()
+	{
+		
+	}
+	
+	public function initializeComponent(system:ISystem) : Void
+	{
+	}
+}
+
+class TestClass6 extends TestClass5
+{
+	public function new()
+	{
+		super();
+	}
+}
+
+interface TestClass5View1 extends IComponentView
+{
+}
+
+class TestClass4 implements IComponent implements TestClass4View1
 {
 	private var dependency:TestClass3View1;
 	private var dependency2:TestClass4View1;
@@ -135,14 +159,6 @@ class SystemTest extends TestCase
 		assertTrue(exceptionThrown);
 	}
 	
-	public function testThatAnInstanceIsReturnedForTheRegisteredClass():Void
-	{
-		var system:ISystem = new System();
-		system.register(TestClass1, []);
-		
-		ensureTypeAndInstance(system, TestClass1);
-	}
-	
 	private function ensureTypeAndInstance(system : ISystem, clazz : Class<Dynamic>):Void
 	{
 		var instance:Dynamic = system.get(clazz);
@@ -154,14 +170,19 @@ class SystemTest extends TestCase
 		assertTrue(Std.instance(instance, clazz) != null);
 	}
 	
-	public function testThatTheRegisteredViewsReturnTheRegisteredClassToo():Void
+	public function testThatTheRegisteredViewsDoesntReturnTheRegisteredClassItself():Void
 	{
 		var system:ISystem = new System();
 		system.register(TestClass1, [TestClass1View1, TestClass1View2]);
+		var exceptionThrown:Bool = false;
 		
-		ensureTypeAndInstance(system, TestClass1);
-		ensureTypeAndInstance(system, TestClass1View1);
-		ensureTypeAndInstance(system, TestClass1View2);
+		try {
+			system.get(TestClass1);
+		} catch (msg : String) {
+			exceptionThrown = true;
+		}
+		
+		assertTrue(exceptionThrown);
 	}
 	
 	public function testThatTheSameInstanceIsReturned():Void 
@@ -170,8 +191,8 @@ class SystemTest extends TestCase
 		system.register(TestClass1, [TestClass1View1, TestClass1View2]);
 		
 		// no exception should happen herre because the class has been registered
-		var instance1 = system.get(TestClass1);
-		var instance2 = system.get(TestClass1);
+		var instance1 = system.get(TestClass1View1);
+		var instance2 = system.get(TestClass1View1);
 		
 		assertEquals(instance1, instance2);
 	}
@@ -183,8 +204,8 @@ class SystemTest extends TestCase
 		system.register(TestClass2, [TestClass2View1, TestClass2View2]);
 		
 		// no exception should happen herre because the class has been registered
-		var instance1 = system.get(TestClass1);
-		var instance2 = system.get(TestClass2);
+		var instance1 = system.get(TestClass1View1);
+		var instance2 = system.get(TestClass2View1);
 		
 		assertTrue(instance1 != null);
 		assertTrue(instance2 != null);

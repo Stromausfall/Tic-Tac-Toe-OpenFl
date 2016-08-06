@@ -1,12 +1,12 @@
 package net.matthiasauer.tictactoe.controller;
-import net.matthiasauer.di.ComponentView;
+import net.matthiasauer.di.IComponentView;
 import net.matthiasauer.tictactoe.controller.player.IPlayer;
 
 /**
  * ...
  * @author Matthias Auer
  */
-interface IController extends ComponentView
+interface IController extends IComponentView
 {
 	function notifyTileClick(x:Int, y:Int) : Void;
 	

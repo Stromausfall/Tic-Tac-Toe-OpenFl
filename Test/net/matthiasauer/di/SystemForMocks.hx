@@ -6,7 +6,7 @@ package net.matthiasauer.di;
  */
 class SystemForMocks extends System
 {
-	public function registerMock<T:Component>(originalClass : Class<T>, mock : T)
+	public function registerMock<T:IComponent>(originalClass : Class<T>, mock : T)
 	{
 		// get an id for the clazz
 		var clazzToInstantiateClazzName:String = Type.getClassName(originalClass);

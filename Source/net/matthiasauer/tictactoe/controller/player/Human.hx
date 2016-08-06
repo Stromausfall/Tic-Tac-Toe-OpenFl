@@ -1,5 +1,5 @@
 package net.matthiasauer.tictactoe.controller.player;
-import net.matthiasauer.tictactoe.model.IGameBoard;
+import net.matthiasauer.tictactoe.model.IGameBoardForController;
 import net.matthiasauer.tictactoe.model.Player;
 
 /**
@@ -9,10 +9,10 @@ import net.matthiasauer.tictactoe.model.Player;
 class Human implements IPlayer
 {
 	private var id:Player;
-	private var gameBoard:IGameBoard;
+	private var gameBoard:IGameBoardForController;
 	private var observer:PlayerStatus->Void;
 
-	public function new(player:Player, gameBoard:IGameBoard) 
+	public function new(player:Player, gameBoard:IGameBoardForController) 
 	{
 		this.id = player;
 		this.gameBoard = gameBoard;

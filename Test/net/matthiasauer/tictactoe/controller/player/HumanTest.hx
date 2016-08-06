@@ -4,7 +4,7 @@ import mockatoo.Mockatoo;
 import net.matthiasauer.di.ISystem;
 import net.matthiasauer.di.SystemForMocks;
 import net.matthiasauer.tictactoe.model.GameTile;
-import net.matthiasauer.tictactoe.model.IGameBoard;
+import net.matthiasauer.tictactoe.model.IGameBoardForView;
 import net.matthiasauer.tictactoe.model.GameBoard;
 import net.matthiasauer.tictactoe.model.Player;
 using mockatoo.Mockatoo;

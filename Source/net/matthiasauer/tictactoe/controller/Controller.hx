@@ -1,5 +1,5 @@
 package net.matthiasauer.tictactoe.controller;
-import net.matthiasauer.di.Component;
+import net.matthiasauer.di.IComponent;
 import net.matthiasauer.di.ISystem;
 import net.matthiasauer.tictactoe.controller.player.IPlayer;
 import net.matthiasauer.tictactoe.controller.player.PlayerStatus;
@@ -8,7 +8,7 @@ import net.matthiasauer.tictactoe.controller.player.PlayerStatus;
  * ...
  * @author Matthias Auer
  */
-class Controller implements IController implements Component
+class Controller implements IController implements IComponent
 {
 	private var activePlayer:IPlayer = null;
 	private var inactivePlayer:IPlayer = null;

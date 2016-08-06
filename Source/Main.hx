@@ -1,16 +1,19 @@
 package;
 
-import net.matthiasauer.di.Component;
+import net.matthiasauer.di.IComponent;
 import net.matthiasauer.di.ISystem;
 import net.matthiasauer.tictactoe.controller.player.Computer;
 import net.matthiasauer.tictactoe.controller.player.Human;
+import net.matthiasauer.tictactoe.view.IGameView;
 import net.matthiasauer.tictactoe.view.GameView;
 import net.matthiasauer.tictactoe.view.svgelement.SVGFacade;
 import net.matthiasauer.tictactoe.controller.Controller;
 import net.matthiasauer.tictactoe.controller.IController;
 import net.matthiasauer.tictactoe.model.Player;
 import net.matthiasauer.tictactoe.model.GameBoard;
-import net.matthiasauer.tictactoe.model.IGameBoard;
+import net.matthiasauer.tictactoe.model.IGameBoardForView;
+import net.matthiasauer.tictactoe.model.IGameBoardForModel;
+import net.matthiasauer.tictactoe.model.IGameBoardForController;
 import openfl.display.Sprite;
 import net.matthiasauer.di.System;
 import flash.events.Event;
@@ -39,19 +42,19 @@ class Main extends Sprite {
 		TestMain.main();
 		
 		var system:ISystem = new System();
-		system.register(GameView, []);
-		system.register(GameBoard, [IGameBoard]);
+		system.register(GameView, [IGameView]);
+		system.register(GameBoard, [IGameBoardForView, IGameBoardForController, IGameBoardForModel]);
 		system.register(Controller, [IController]);
 		
-		var gameView:GameView = system.get(GameView);
+		var gameView:IGameView = system.get(IGameView);
 		var controller:IController = system.get(IController);
-		var gameBoard:IGameBoard = system.get(IGameBoard);
+		var gameBoard:IGameBoardForController = system.get(IGameBoardForController);
 		
 		controller.setPlayers(new Human(Player.Player1, gameBoard), new Computer(Player.Player2, gameBoard));
 		//controller.setPlayers(new Computer(Player.Player1, gameBoard), new Computer(Player.Player2, gameBoard));
 		
-		this.addChild(gameView);
-		gameView.setUp();
+		this.addChild(gameView.getDisplayObject());
+		gameView.reset();
 		
 		
 		

@@ -7,6 +7,7 @@ import net.matthiasauer.tictactoe.controller.ControllerTest;
 import net.matthiasauer.tictactoe.controller.player.ComputerTest;
 import net.matthiasauer.tictactoe.controller.player.HumanTest;
 import net.matthiasauer.tictactoe.model.GameBoardTest;
+import net.matthiasauer.tictactoe.model.GameManagerTest;
 import net.matthiasauer.tictactoe.model.GameTileTest;
 
 /**
@@ -29,6 +30,7 @@ class TestMain
 		// test Model
 		r.add(new GameTileTest());
 		r.add(new GameBoardTest());
+		r.add(new GameManagerTest());
 		
 		// test Controller
 		r.add(new ControllerTest());

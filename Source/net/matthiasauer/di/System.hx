@@ -19,19 +19,16 @@ class System implements ISystem
 		toBeInitialized = new Map<String, Bool>();
 	}
 	
-	public function register(clazz:Class<Component>, views:Array<Class<ComponentView>>) : Void
+	public function register(clazz:Class<IComponent>, views:Array<Class<IComponentView>>) : Void
 	{
-		// the basic mapping - it to itself
-		registerView(clazz, clazz);
-		
-		// also map all views
+		// map all views
 		for (view in views)
 		{
 			registerView(view, clazz);
 		}
 	}
 	
-	public function get<T:ComponentView>(view:Class<T>) : T {
+	public function get<T:IComponentView>(view:Class<T>) : T {
 		// get the clazz mapped by the view
 		var clazzToInstantiate:Class<Dynamic> = getClazzForView(view);
 		
@@ -47,14 +44,14 @@ class System implements ISystem
 		return instance;
 	}
 	
-	private function registerView(componentView:Class<Dynamic>, component:Class<Component>) : Void
+	private function registerView(componentView:Class<Dynamic>, component:Class<IComponent>) : Void
 	{
 		var viewClazzName = Type.getClassName(componentView);
 		
 		mappings.set(viewClazzName, component);
 	}
 	
-	private function getClazzForView<T:ComponentView>(clazz:Class<T>) : Class<Dynamic>
+	private function getClazzForView<T:IComponentView>(clazz:Class<T>) : Class<Dynamic>
 	{
 		var clazzName = Type.getClassName(clazz);
 		

@@ -1,22 +1,25 @@
 package net.matthiasauer.tictactoe.view;
-import net.matthiasauer.di.Component;
-import net.matthiasauer.di.ComponentView;
+import net.matthiasauer.di.IComponent;
+import net.matthiasauer.di.IComponentView;
 import net.matthiasauer.di.ISystem;
 import net.matthiasauer.tictactoe.controller.IController;
-import net.matthiasauer.tictactoe.model.IGameBoard;
+import net.matthiasauer.tictactoe.model.IGameBoardForView;
 import net.matthiasauer.tictactoe.model.IGameTile;
 import net.matthiasauer.tictactoe.model.Player;
+import net.matthiasauer.tictactoe.view.element.data.Fading;
 import net.matthiasauer.tictactoe.view.svgelement.SVGElement;
 import net.matthiasauer.tictactoe.view.svgelement.SVGFacade;
+import net.matthiasauer.tictactoe.view.textelement.TextElement;
+import openfl.display.DisplayObject;
 import openfl.display.Sprite;
 
 /**
  * ...
  * @author Matthias Auer
  */
-class GameView extends Sprite implements Component implements ComponentView
+class GameView extends Sprite implements IComponent implements IComponentView
 {
-	private var gameBoard:IGameBoard;
+	private var gameBoard:IGameBoardForView;
 	private var controller:IController;
 	private var tiles:Array<Array<SVGElement>>;
 	
@@ -27,11 +30,11 @@ class GameView extends Sprite implements Component implements ComponentView
 
 	public function initializeComponent(system:ISystem) : Void
 	{
-		this.gameBoard = system.get(IGameBoard);
+		this.gameBoard = system.get(IGameBoardForView);
 		this.controller = system.get(IController);
 	}
 	
-	public function setUp()
+	public function reset()
 	{
 		var horizontalTiles:Int = this.gameBoard.getHorizontalTilesCount();
 		var verticalTiles:Int = this.gameBoard.getVerticalTilesCount();
@@ -49,6 +52,8 @@ class GameView extends Sprite implements Component implements ComponentView
 				this.installListenerOnModelGameTile(x, y);
 			}
 		}
+		
+		this.addChild(new TextElement().initialize(" test ", 48));
 	}
 	
 	private function changeGameTile(x:Int, y:Int, newOwner:Player)
@@ -89,5 +94,10 @@ class GameView extends Sprite implements Component implements ComponentView
 		
 		// install the listener on the tile model
 		tile.addObserver(observeFunction);
+	}
+	
+	public function getDisplayObject() : DisplayObject
+	{
+		return this;
 	}
 }

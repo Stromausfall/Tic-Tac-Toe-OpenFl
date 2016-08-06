@@ -1,12 +1,12 @@
 package net.matthiasauer.tictactoe.model;
-import net.matthiasauer.di.Component;
+import net.matthiasauer.di.IComponent;
 import net.matthiasauer.di.ISystem;
 
 /**
  * ...
  * @author Matthias Auer
  */
-class GameBoard implements IGameBoard implements Component
+class GameBoard implements IGameBoardForModel implements IComponent
 {
 	private var horizontalTilesCount = 3;
 	private var verticalTilesCount = 3;
@@ -41,6 +41,17 @@ class GameBoard implements IGameBoard implements Component
 	public function changeOwner(x:Int, y:Int, newOwner:Player) : Void
 	{
 		this.tiles[x][y].setOwner(newOwner);
+	}
+	
+	public function resetBoard() : Void
+	{
+		for (x in 0...this.horizontalTilesCount)
+		{
+			for (y in 0...this.verticalTilesCount)
+			{
+				this.tiles[x][y].resetOwner();
+			}
+		}
 	}
 	
 	public function initializeComponent(system:ISystem) : Void

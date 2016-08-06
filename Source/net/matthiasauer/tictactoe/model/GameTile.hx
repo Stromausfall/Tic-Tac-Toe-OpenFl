@@ -33,10 +33,7 @@ class GameTile implements IGameTile
 			throw "Owner can only be assigned once to a GameTile";
 		}
 		
-		this.owner = owner;
-		
-		// notify observers
-		this.observable.notify(true);
+		this.setOwnerWithoutChecks(owner);
 	}
 	
 	public function addObserver(observer:Void->Void) : Void
@@ -44,5 +41,18 @@ class GameTile implements IGameTile
 		var wrapperLambda = function(f:Bool) { observer(); };
 		
 		this.observable.add("mainObserver", wrapperLambda);
+	}
+	
+	public function resetOwner() : Void
+	{
+		this.setOwnerWithoutChecks(Player.None);
+	}
+	
+	private function setOwnerWithoutChecks(owner:Player)
+	{
+		this.owner = owner;
+		
+		// notify observers
+		this.observable.notify(true);
 	}
 }

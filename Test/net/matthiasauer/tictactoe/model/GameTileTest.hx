@@ -65,4 +65,31 @@ class GameTileTest extends TestCase
 		
 		assertTrue(exceptionThrown);
 	}
+	
+	public function testResetOwner() : Void
+	{
+		var tile:GameTile = new GameTile();
+		assertEquals(tile.getOwner(), Player.None);
+		
+		tile.setOwner(Player.Player1);
+		assertEquals(tile.getOwner(), Player.Player1);
+		
+		tile.resetOwner();
+		assertEquals(tile.getOwner(), Player.None);
+	}
+	
+	public function testResetOwnerNotifiesObserver() : Void
+	{
+		var tile:GameTile = new GameTile();
+		var called = false;
+		tile.addObserver(function() { called = true; });
+		
+		tile.setOwner(Player.Player1);
+		assertTrue(called);
+		called = false;
+		
+		tile.resetOwner();
+		assertTrue(called);
+		assertEquals(tile.getOwner(), Player.None);
+	}
 }
