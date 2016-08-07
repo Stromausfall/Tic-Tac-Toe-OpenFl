@@ -1,5 +1,5 @@
 package net.matthiasauer.tictactoe.model;
-import net.matthiasauer.observer.Observable;
+import net.matthiasauer.observer.SimpleObservable;
 
 /**
  * The tile belongs to a player and is located at a specific position
@@ -7,13 +7,13 @@ import net.matthiasauer.observer.Observable;
  */
 class GameTile implements IGameTile
 {
-	private var observable:Observable<Bool>;
+	private var observable:SimpleObservable;
 	private var owner:Player;
 
 	public function new() 
 	{
 		this.owner = Player.None;
-		this.observable = new Observable<Bool>();
+		this.observable = new SimpleObservable();
 	}
 	
 	public function getOwner() : Player {
@@ -38,9 +38,7 @@ class GameTile implements IGameTile
 	
 	public function addObserver(observer:Void->Void) : Void
 	{
-		var wrapperLambda = function(f:Bool) { observer(); };
-		
-		this.observable.add("mainObserver", wrapperLambda);
+		this.observable.add("mainObserver", observer);
 	}
 	
 	public function resetOwner() : Void
@@ -53,6 +51,6 @@ class GameTile implements IGameTile
 		this.owner = owner;
 		
 		// notify observers
-		this.observable.notify(true);
+		this.observable.notify();
 	}
 }

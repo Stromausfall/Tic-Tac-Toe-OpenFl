@@ -5,7 +5,7 @@ package net.matthiasauer.observer;
  * @author Matthias Auer
  */
 @:generic
-class Observable<T>
+class GenericObservable<T>
 {
 	private var observers:Map<String, T->Void> = null;
 	

@@ -5,7 +5,7 @@ import haxe.unit.TestCase;
  * ...
  * @author Matthias Auer
  */
-class ObserverTest extends TestCase
+class GenericObservableTest extends TestCase
 {
 	public function new() 
 	{
@@ -16,7 +16,7 @@ class ObserverTest extends TestCase
 	{
 		var id:String = "id#1";
 		var test:Int = -1;
-		var observable:Observable<Int> = new Observable<Int>();
+		var observable:GenericObservable<Int> = new GenericObservable<Int>();
 		
 		// add the observer
 		observable.add(id, function(num) { test = num; });
@@ -32,7 +32,7 @@ class ObserverTest extends TestCase
 		var test1:Int = -1;
 		var test2:Int = -1;
 		var test3:Int = -1;
-		var observable:Observable<Int> = new Observable<Int>();
+		var observable:GenericObservable<Int> = new GenericObservable<Int>();
 		
 		// add the observer
 		observable.add("id#1", function(num) { test1 = num; });
@@ -53,7 +53,7 @@ class ObserverTest extends TestCase
 		var test2:Int = -1;
 		var test3:Int = -1;
 		var test4:Int = -1;
-		var observable:Observable<Int> = new Observable<Int>();
+		var observable:GenericObservable<Int> = new GenericObservable<Int>();
 		
 		// add the observer
 		observable.add("id#1", function(num) { test1 = num; });
@@ -78,7 +78,7 @@ class ObserverTest extends TestCase
 		var test1:Int = -1;
 		var test2:Int = -1;
 		var test3:Int = -1;
-		var observable:Observable<Int> = new Observable<Int>();
+		var observable:GenericObservable<Int> = new GenericObservable<Int>();
 		
 		// add the observer
 		observable.add("id#1", function(num) { test1 = num; });

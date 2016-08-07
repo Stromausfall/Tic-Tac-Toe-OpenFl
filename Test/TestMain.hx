@@ -2,7 +2,8 @@ package;
 import net.matthiasauer.di.SystemForMocks;
 import net.matthiasauer.di.SystemForMocksTest;
 import net.matthiasauer.di.SystemTest;
-import net.matthiasauer.observer.ObserverTest;
+import net.matthiasauer.observer.GenericObservableTest;
+import net.matthiasauer.observer.SimpleObservableTest;
 import net.matthiasauer.tictactoe.controller.ControllerTest;
 import net.matthiasauer.tictactoe.controller.player.ComputerTest;
 import net.matthiasauer.tictactoe.controller.player.HumanTest;
@@ -25,7 +26,8 @@ class TestMain
 		r.add(new SystemForMocksTest());
 		
 		// test observer
-		r.add(new ObserverTest());
+		r.add(new GenericObservableTest());
+		r.add(new SimpleObservableTest());
 		
 		// test Model
 		r.add(new GameTileTest());

@@ -70,4 +70,17 @@ class GameManagerTest extends TestCase
 		assertEquals(Player.None, gameBoard.getTile(1, 1).getOwner());
 		assertEquals(Player.None, gameBoard.getTile(0, 2).getOwner());
 	}
+	
+	public function testThatGameStatusChangeNotifiesObservers()
+	{
+		var system:ISystem = this.setupSystem();		
+		var gameManager:IGameManagerForController = system.get(IGameManagerForController);
+		var notified:Bool = false;
+		
+		gameManager.addObserver(function() { notified = true; });
+		
+		assertFalse(notified);
+		gameManager.startGame();
+		assertTrue(notified);
+	}
 }

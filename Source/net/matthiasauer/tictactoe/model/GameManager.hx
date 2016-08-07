@@ -1,6 +1,7 @@
 package net.matthiasauer.tictactoe.model;
 import net.matthiasauer.di.IComponent;
 import net.matthiasauer.di.ISystem;
+import net.matthiasauer.observer.SimpleObservable;
 
 /**
  * ...
@@ -8,12 +9,14 @@ import net.matthiasauer.di.ISystem;
  */
 class GameManager implements IGameManagerForController implements IComponent
 {
+	private var observable:SimpleObservable;
 	private var gameStatus:GameStatus;
 	private var gameBoard:IGameBoardForModel;
 
 	public function new() 
 	{
 		this.gameStatus = GameStatus.MENU;
+		this.observable = new SimpleObservable();
 	}
 
 	public function initializeComponent(system:ISystem) : Void
@@ -28,7 +31,19 @@ class GameManager implements IGameManagerForController implements IComponent
 	
 	public function startGame() : Void
 	{
-		this.gameStatus = GameStatus.GAME;
+		this.changeStatus(GameStatus.GAME);
+		
 		this.gameBoard.resetBoard();
+	}
+	
+	private function changeStatus(gameStatus:GameStatus) : Void
+	{
+		this.gameStatus = gameStatus;
+		this.observable.notify();
+	}
+	
+	public function addObserver(observeFunction:Void->Void) : Void
+	{
+		this.observable.add("mainObserver", observeFunction);
 	}
 }
