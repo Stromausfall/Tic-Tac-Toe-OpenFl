@@ -34,20 +34,15 @@ class Main extends Sprite {
 		system.register(Controller, [IController]);
 		system.register(ViewManager, [IViewManager]);
 		
-		var gameView:IGameView = system.get(IGameView);
 		var controller:IController = system.get(IController);
 		var gameBoard:IGameBoardForController = system.get(IGameBoardForController);
+		var viewManager:IViewManager = system.get(IViewManager);
+		
+		viewManager.initialize(this);
 		
 		controller.setPlayers(new Human(Player.Player1, gameBoard), new Computer(Player.Player2, gameBoard));
 		//controller.setPlayers(new Computer(Player.Player1, gameBoard), new Computer(Player.Player2, gameBoard));
 		
-		this.addChild(gameView.getDisplayObject());
-		gameView.reset();
-		
-		
-		Lib.trace(" --- " + Type.getClassName(Type.getClass(this.stage)));
-		
-		new Resizing(this).initialize();
 		
 		controller.startGame();
 	}
