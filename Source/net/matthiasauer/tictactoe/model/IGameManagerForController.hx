@@ -6,4 +6,5 @@ package net.matthiasauer.tictactoe.model;
 interface IGameManagerForController extends IGameManagerForView
 {
 	function startGame() : Void;
+	function goToMenu() : Void;
 }

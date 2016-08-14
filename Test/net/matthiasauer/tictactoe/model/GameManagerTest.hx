@@ -83,4 +83,30 @@ class GameManagerTest extends TestCase
 		gameManager.startGame();
 		assertTrue(notified);
 	}
+	
+	public function testThatGameStatusCanBeChangedToMenu()
+	{
+		var system:ISystem = this.setupSystem();
+		var gameManager:IGameManagerForController = system.get(IGameManagerForController);
+		
+		assertEquals(GameStatus.MENU, gameManager.getStatus());
+		gameManager.startGame();
+		assertEquals(GameStatus.GAME, gameManager.getStatus());
+		gameManager.goToMenu();
+		assertEquals(GameStatus.MENU, gameManager.getStatus());
+	}
+	
+	public function testThatGameStatusChangeToMenuNotifiesObservers()
+	{
+		var system:ISystem = this.setupSystem();		
+		var gameManager:IGameManagerForController = system.get(IGameManagerForController);
+		var notified:Bool = false;
+		
+		gameManager.addObserver(function() { notified = true; });
+		
+		gameManager.startGame();
+		notified = false;
+		gameManager.goToMenu();
+		assertTrue(notified);
+	}
 }

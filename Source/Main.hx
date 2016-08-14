@@ -18,6 +18,9 @@ import net.matthiasauer.tictactoe.model.GameBoard;
 import net.matthiasauer.tictactoe.model.IGameBoardForView;
 import net.matthiasauer.tictactoe.model.IGameBoardForModel;
 import net.matthiasauer.tictactoe.model.IGameBoardForController;
+import net.matthiasauer.tictactoe.model.GameManager;
+import net.matthiasauer.tictactoe.model.IGameManagerForView;
+import net.matthiasauer.tictactoe.model.IGameManagerForController;
 import openfl.Lib;
 import openfl.display.Sprite;
 
@@ -33,6 +36,7 @@ class Main extends Sprite {
 		system.register(GameBoard, [IGameBoardForView, IGameBoardForController, IGameBoardForModel]);
 		system.register(Controller, [IController]);
 		system.register(ViewManager, [IViewManager]);
+		system.register(GameManager, [IGameManagerForController, IGameManagerForView]);
 		
 		var controller:IController = system.get(IController);
 		var gameBoard:IGameBoardForController = system.get(IGameBoardForController);

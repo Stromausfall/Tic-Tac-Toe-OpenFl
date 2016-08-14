@@ -36,6 +36,11 @@ class GameManager implements IGameManagerForController implements IComponent
 		this.gameBoard.resetBoard();
 	}
 	
+	public function goToMenu() : Void
+	{
+		this.changeStatus(GameStatus.MENU);
+	}
+	
 	private function changeStatus(gameStatus:GameStatus) : Void
 	{
 		this.gameStatus = gameStatus;
