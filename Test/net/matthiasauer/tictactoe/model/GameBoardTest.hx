@@ -1,5 +1,7 @@
 package net.matthiasauer.tictactoe.model;
 import haxe.unit.TestCase;
+import net.matthiasauer.di.ISystem;
+import net.matthiasauer.di.System;
 
 /**
  * ...
@@ -137,5 +139,97 @@ class GameBoardTest extends TestCase
 		assertEquals(Player.None, testBoard.getTile(2, 0).getOwner());
 		assertEquals(Player.None, testBoard.getTile(1, 1).getOwner());
 		assertEquals(Player.None, testBoard.getTile(0, 2).getOwner());
+	}
+	
+	public function testThatHorizontalLinesWinsGame() {
+		for (player in [Player.Player1, Player.Player2]) {
+			for (y in 0...3) {
+				var system:ISystem = new System();
+				
+				system.register(GameBoard, [IGameBoardForModel]);
+				system.register(GameManager, [IGameManagerForModel]);
+				
+				var testBoard:IGameBoardForModel = system.get(IGameBoardForModel);
+				var gameManager:IGameManagerForModel = system.get(IGameManagerForModel);
+				
+				testBoard.resetBoard();
+				testBoard.changeOwner(0, y, player);
+				testBoard.changeOwner(1, y, player);
+				
+				assertFalse(gameManager.isGameOver());
+				
+				testBoard.changeOwner(2, y, player);
+				
+				assertTrue(gameManager.isGameOver());
+			}
+		}
+	}
+	
+	public function testThatVerticalLinesWinsGame() {
+		for (player in [Player.Player1, Player.Player2]) {
+			for (x in 0...3) {
+				var system:ISystem = new System();
+				
+				system.register(GameBoard, [IGameBoardForModel]);
+				system.register(GameManager, [IGameManagerForModel]);
+				
+				var testBoard:IGameBoardForModel = system.get(IGameBoardForModel);
+				var gameManager:IGameManagerForModel = system.get(IGameManagerForModel);
+				
+				testBoard.resetBoard();
+				testBoard.changeOwner(x, 0, player);
+				testBoard.changeOwner(x, 1, player);
+				
+				assertFalse(gameManager.isGameOver());
+				
+				testBoard.changeOwner(x, 2, player);
+				
+				assertTrue(gameManager.isGameOver());
+			}
+		}
+	}
+	
+	public function testThatDiagonalLine1WinsGame() {
+		for (player in [Player.Player1, Player.Player2]) {
+			var system:ISystem = new System();
+					
+			system.register(GameBoard, [IGameBoardForModel]);
+			system.register(GameManager, [IGameManagerForModel]);
+					
+			var testBoard:IGameBoardForModel = system.get(IGameBoardForModel);
+			var gameManager:IGameManagerForModel = system.get(IGameManagerForModel);
+					
+			testBoard.resetBoard();
+			testBoard.changeOwner(2, 0, player);
+			testBoard.changeOwner(1, 1, player);
+					
+			assertFalse(gameManager.isGameOver());
+					
+			testBoard.changeOwner(0, 2, player);
+					
+			assertTrue(gameManager.isGameOver());
+		}
+	}
+	
+	public function testThatDiagonalLine2WinsGame() {
+		for (player in [Player.Player1, Player.Player2]) {
+			var system:ISystem = new System();
+					
+			system.register(GameBoard, [IGameBoardForModel]);
+			system.register(GameManager, [IGameManagerForModel]);
+					
+			var testBoard:IGameBoardForModel = system.get(IGameBoardForModel);
+			var gameManager:IGameManagerForModel = system.get(IGameManagerForModel);
+					
+			testBoard.resetBoard();
+			testBoard.changeOwner(0, 0, player);
+			testBoard.changeOwner(1, 1, player);
+					
+			assertFalse(gameManager.isGameOver());
+					
+			testBoard.changeOwner(2, 2, player);
+					
+			assertTrue(gameManager.isGameOver());
+		}
 	}
 }

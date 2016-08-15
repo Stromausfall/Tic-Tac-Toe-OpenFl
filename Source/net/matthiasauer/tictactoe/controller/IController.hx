@@ -13,4 +13,6 @@ interface IController extends IComponentView
 	function setPlayers(player1:IPlayer, player2:IPlayer) : Void;
 	
 	function startGame() : Void;
+	
+	function notifyNewGameClick() : Void;
 }

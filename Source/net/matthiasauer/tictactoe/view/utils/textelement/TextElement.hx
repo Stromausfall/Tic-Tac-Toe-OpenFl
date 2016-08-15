@@ -1,5 +1,5 @@
-package net.matthiasauer.tictactoe.view.textelement;
-import net.matthiasauer.tictactoe.view.element.ViewElement;
+package net.matthiasauer.tictactoe.view.utils.textelement;
+import net.matthiasauer.tictactoe.view.utils.element.ViewElement;
 import openfl.display.DisplayObject;
 import openfl.text.TextField;
 import openfl.text.TextFormat;
@@ -24,19 +24,20 @@ class TextElement extends ViewElement
 		return this.textField;
 	}
 	
-	public function initialize(initialText:String, size:Int) : TextElement
+	public function initialize(initialText:String, size:Int, color:Int) : TextElement
 	{
 		this.textField = new TextField();
 		
 		this.textFormat = new TextFormat();
-		this.textFormat.size = 48;
+		this.textFormat.size = size;
 		this.textFormat.align = TextFormatAlign.CENTER;
-		this.textFormat.color = 0xFF0000;
+		this.textFormat.color = color;
 		
 		this.textField.text = initialText;
-		this.textField.width = 400;
+		this.textField.width = size * initialText.length;
+		this.textField.height = size;
 		this.textField.setTextFormat(textFormat);
-		this.textField.x = -this.textField.width/2;
+		this.textField.x = -this.textField.width / 2;
 		
 		this.addChild(this.textField);
 		

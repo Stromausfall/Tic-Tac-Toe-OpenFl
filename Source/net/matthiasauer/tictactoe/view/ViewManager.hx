@@ -2,6 +2,10 @@ package net.matthiasauer.tictactoe.view;
 import net.matthiasauer.di.IComponent;
 import net.matthiasauer.di.ISystem;
 import net.matthiasauer.tictactoe.model.IGameManagerForView;
+import net.matthiasauer.tictactoe.view.game.IGameView;
+import net.matthiasauer.tictactoe.view.menu.IMenuView;
+import net.matthiasauer.tictactoe.view.utils.view.IView;
+import net.matthiasauer.tictactoe.view.utils.view.Resizing;
 import openfl.display.Sprite;
 
 /**
@@ -10,7 +14,8 @@ import openfl.display.Sprite;
  */
 class ViewManager extends Sprite implements IComponent implements IViewManager
 {
-	private var gameView:IGameView;
+	private var gameView:IView;
+	private var menuView:IView;
 	private var gameManager:IGameManagerForView;
 	
 	public function new() 
@@ -21,6 +26,7 @@ class ViewManager extends Sprite implements IComponent implements IViewManager
 	public function initializeComponent(system:ISystem) : Void
 	{
 		this.gameView = system.get(IGameView);
+		this.menuView = system.get(IMenuView);
 		this.gameManager = system.get(IGameManagerForView);
 	}
 	
@@ -45,25 +51,24 @@ class ViewManager extends Sprite implements IComponent implements IViewManager
 		
 		switch (this.gameManager.getStatus()) {
 			case GAME:
-				this.displayGameView();
+				this.displayView(this.gameView);
 			case MENU:
-				this.displayMenuView();
+				this.displayView(this.menuView);
 		}
 	}
 	
 	private function resetAllView()
 	{
 		this.removeChild(this.gameView.getDisplayObject());
+		this.removeChild(this.menuView.getDisplayObject());
 	}
 	
-	private function displayMenuView()
+	private function displayView(view:IView)
 	{
-	}
-	
-	private function displayGameView()
-	{
-		// display the game view
-		this.addChild(gameView.getDisplayObject());
-		gameView.reset();
+		// display the view
+		this.addChild(view.getDisplayObject());
+		
+		// reset its state
+		view.reset();
 	}
 }

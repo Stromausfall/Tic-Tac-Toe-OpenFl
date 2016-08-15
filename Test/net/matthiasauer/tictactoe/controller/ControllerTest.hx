@@ -3,6 +3,11 @@ import haxe.unit.TestCase;
 import net.matthiasauer.di.ISystem;
 import net.matthiasauer.di.System;
 import net.matthiasauer.di.SystemForMocks;
+import net.matthiasauer.tictactoe.model.GameStatus;
+import net.matthiasauer.tictactoe.model.GameManager;
+import net.matthiasauer.tictactoe.model.GameBoard;
+import net.matthiasauer.tictactoe.model.IGameBoardForModel;
+import net.matthiasauer.tictactoe.model.IGameManagerForController;
 import net.matthiasauer.tictactoe.controller.player.IPlayer;
 import mockatoo.Mockatoo.*;
 import net.matthiasauer.tictactoe.controller.player.PlayerStatus;
@@ -98,6 +103,27 @@ class ControllerTest extends TestCase
 		// check that the mock has been called
 		assertEquals(3, player1.startTurnCalled);
 		assertEquals(3, player2.startTurnCalled);
+	}
+	
+	public function testThatClickingOnTheNewGameMenuButtonChangesTheGameState()
+	{
+		var system:SystemForMocks = new SystemForMocks();
+		system.register(Controller, [IController]);
+		system.register(GameManager, [IGameManagerForController]);
+		system.register(GameBoard, [IGameBoardForModel]);
+		system.registerMock(GameBoard, mock(GameBoard));
+		
+		var controller:IController = system.get(IController);
+		var gameManager:IGameManagerForController = system.get(IGameManagerForController);
+		var player1:TestIPlayer = new TestIPlayer();
+		var player2:TestIPlayer = new TestIPlayer();
+		controller.setPlayers(player1, player2);
+		
+		assertEquals(GameStatus.MENU, gameManager.getStatus());
+		
+		controller.notifyNewGameClick();
+		
+		assertEquals(GameStatus.GAME, gameManager.getStatus());
 	}
 }
 

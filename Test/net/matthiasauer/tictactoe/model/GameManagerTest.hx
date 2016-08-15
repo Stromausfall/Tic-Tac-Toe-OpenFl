@@ -22,7 +22,7 @@ class GameManagerTest extends TestCase
 	{
 		var system:SystemForMocks = new SystemForMocks();
 		
-		system.register(GameManager, [IGameManagerForController]);		
+		system.register(GameManager, [IGameManagerForModel, IGameManagerForController]);		
 		system.register(GameBoard, [IGameBoardForController, IGameBoardForView, IGameBoardForModel]);
 		
 		return system;
@@ -98,7 +98,7 @@ class GameManagerTest extends TestCase
 	
 	public function testThatGameStatusChangeToMenuNotifiesObservers()
 	{
-		var system:ISystem = this.setupSystem();		
+		var system:ISystem = this.setupSystem();
 		var gameManager:IGameManagerForController = system.get(IGameManagerForController);
 		var notified:Bool = false;
 		

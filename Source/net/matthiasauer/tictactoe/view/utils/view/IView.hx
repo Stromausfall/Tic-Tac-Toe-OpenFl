@@ -1,11 +1,10 @@
-package net.matthiasauer.tictactoe.view;
-import net.matthiasauer.di.IComponentView;
+package net.matthiasauer.tictactoe.view.utils.view;
 import openfl.display.DisplayObject;
 
 /**
  * @author Matthias Auer
  */
-interface IGameView extends IComponentView
+interface IView 
 {
 	function getDisplayObject() : DisplayObject;
 	function reset() : Void;

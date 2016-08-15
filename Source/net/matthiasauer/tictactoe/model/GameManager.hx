@@ -9,12 +9,14 @@ import net.matthiasauer.observer.SimpleObservable;
  */
 class GameManager implements IGameManagerForController implements IComponent
 {
+	private var gameOver:Bool;
 	private var observable:SimpleObservable;
 	private var gameStatus:GameStatus;
 	private var gameBoard:IGameBoardForModel;
 
 	public function new() 
 	{
+		this.gameOver = false;
 		this.gameStatus = GameStatus.MENU;
 		this.observable = new SimpleObservable();
 	}
@@ -50,5 +52,15 @@ class GameManager implements IGameManagerForController implements IComponent
 	public function addObserver(observeFunction:Void->Void) : Void
 	{
 		this.observable.add("mainObserver", observeFunction);
+	}
+	
+	public function isGameOver() : Bool
+	{
+		return this.gameOver;
+	}
+	
+	public function gameIsOver() : Void
+	{
+		this.gameOver = true;
 	}
 }

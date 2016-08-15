@@ -1,11 +1,9 @@
-package net.matthiasauer.tictactoe.view.svgelement;
+package net.matthiasauer.tictactoe.view.utils.svgelement;
 import net.matthiasauer.tictactoe.controller.IController;
-import net.matthiasauer.tictactoe.model.IGameBoardForView;
 import net.matthiasauer.tictactoe.model.Player;
-import net.matthiasauer.tictactoe.view.svgelement.SVGElement;
-import net.matthiasauer.tictactoe.view.element.data.Clickable;
-import net.matthiasauer.tictactoe.view.element.data.Fading;
-import openfl.events.Event;
+import net.matthiasauer.tictactoe.view.utils.element.data.Clickable;
+import net.matthiasauer.tictactoe.view.utils.element.data.Fading;
+import net.matthiasauer.tictactoe.view.utils.svgelement.SVGElement;
 
 /**
  * ...
@@ -38,7 +36,7 @@ class SVGFacade
 			case Player.None:
 				return "none.svg";
 			default:
-				throw "can't find  assetName for " + player;
+				throw "can't find assetName for " + player;
 		}
 	}
 	

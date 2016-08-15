@@ -1,4 +1,4 @@
-package net.matthiasauer.tictactoe.view;
+package net.matthiasauer.tictactoe.view.game;
 import net.matthiasauer.di.IComponent;
 import net.matthiasauer.di.IComponentView;
 import net.matthiasauer.di.ISystem;
@@ -6,10 +6,10 @@ import net.matthiasauer.tictactoe.controller.IController;
 import net.matthiasauer.tictactoe.model.IGameBoardForView;
 import net.matthiasauer.tictactoe.model.IGameTile;
 import net.matthiasauer.tictactoe.model.Player;
-import net.matthiasauer.tictactoe.view.element.data.Fading;
-import net.matthiasauer.tictactoe.view.svgelement.SVGElement;
-import net.matthiasauer.tictactoe.view.svgelement.SVGFacade;
-import net.matthiasauer.tictactoe.view.textelement.TextElement;
+import net.matthiasauer.tictactoe.view.utils.element.data.Fading;
+import net.matthiasauer.tictactoe.view.utils.svgelement.SVGElement;
+import net.matthiasauer.tictactoe.view.utils.svgelement.SVGFacade;
+import net.matthiasauer.tictactoe.view.utils.textelement.TextElement;
 import openfl.display.DisplayObject;
 import openfl.display.Sprite;
 
@@ -32,10 +32,7 @@ class GameView extends Sprite implements IComponent implements IComponentView
 	{
 		this.gameBoard = system.get(IGameBoardForView);
 		this.controller = system.get(IController);
-	}
-	
-	public function reset()
-	{
+		
 		var horizontalTiles:Int = this.gameBoard.getHorizontalTilesCount();
 		var verticalTiles:Int = this.gameBoard.getVerticalTilesCount();
 		
@@ -52,8 +49,10 @@ class GameView extends Sprite implements IComponent implements IComponentView
 				this.installListenerOnModelGameTile(x, y);
 			}
 		}
-		
-		this.addChild(new TextElement().initialize(" test ", 48));
+	}
+	
+	public function reset()
+	{
 	}
 	
 	private function changeGameTile(x:Int, y:Int, newOwner:Player)

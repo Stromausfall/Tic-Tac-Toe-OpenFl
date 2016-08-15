@@ -3,6 +3,7 @@ import net.matthiasauer.di.IComponent;
 import net.matthiasauer.di.ISystem;
 import net.matthiasauer.tictactoe.controller.player.IPlayer;
 import net.matthiasauer.tictactoe.controller.player.PlayerStatus;
+import net.matthiasauer.tictactoe.model.IGameManagerForController;
 
 /**
  * ...
@@ -12,6 +13,7 @@ class Controller implements IController implements IComponent
 {
 	private var activePlayer:IPlayer = null;
 	private var inactivePlayer:IPlayer = null;
+	private var gameManager:IGameManagerForController = null;
 
 	public function new()
 	{
@@ -60,7 +62,13 @@ class Controller implements IController implements IComponent
 		this.activePlayer.startTurn();
 	}
 	
+	public function notifyNewGameClick() : Void
+	{
+		this.gameManager.startGame();
+	}
+	
 	public function initializeComponent(system:ISystem) : Void
 	{
+		this.gameManager = system.get(IGameManagerForController);
 	}
 }

@@ -1,5 +1,5 @@
-package net.matthiasauer.tictactoe.view.element;
-import net.matthiasauer.tictactoe.view.element.data.IData;
+package net.matthiasauer.tictactoe.view.utils.element;
+import net.matthiasauer.tictactoe.view.utils.element.data.IData;
 import openfl.display.DisplayObject;
 import openfl.display.Sprite;
 

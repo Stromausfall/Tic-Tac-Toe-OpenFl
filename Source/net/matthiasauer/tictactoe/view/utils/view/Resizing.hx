@@ -1,4 +1,4 @@
-package net.matthiasauer.tictactoe.view;
+package net.matthiasauer.tictactoe.view.utils.view;
 import openfl.events.Event;
 import openfl.display.Stage;
 import openfl.display.StageScaleMode;

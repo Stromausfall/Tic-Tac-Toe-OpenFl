@@ -1,7 +1,7 @@
-package net.matthiasauer.tictactoe.view.svgelement;
+package net.matthiasauer.tictactoe.view.utils.svgelement;
 import format.SVG;
-import net.matthiasauer.tictactoe.view.element.ViewElement;
-import net.matthiasauer.tictactoe.view.element.data.IData;
+import net.matthiasauer.tictactoe.view.utils.element.ViewElement;
+import net.matthiasauer.tictactoe.view.utils.element.data.IData;
 import openfl.Assets;
 import openfl.display.DisplayObject;
 import openfl.display.Shape;

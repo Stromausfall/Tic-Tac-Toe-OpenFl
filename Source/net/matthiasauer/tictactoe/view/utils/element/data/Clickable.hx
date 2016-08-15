@@ -1,4 +1,5 @@
-package net.matthiasauer.tictactoe.view.element.data;
+package net.matthiasauer.tictactoe.view.utils.element.data;
+import net.matthiasauer.tictactoe.view.utils.element.ViewElement;
 import openfl.display.DisplayObject;
 import openfl.events.MouseEvent;
 
