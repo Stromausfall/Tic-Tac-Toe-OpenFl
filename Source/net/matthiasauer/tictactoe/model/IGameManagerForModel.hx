@@ -5,5 +5,5 @@ package net.matthiasauer.tictactoe.model;
  */
 interface IGameManagerForModel extends IGameManagerForController
 {
-	function gameIsOver() : Void;
+	function gameIsOver(winner:Player) : Void;
 }

@@ -45,9 +45,36 @@ class GameBoard implements IGameBoardForModel implements IComponent
 		
 		if (this.checkVictoryFor(newOwner))
 		{
-			this.gameManager.gameIsOver();
+			this.gameManager.gameIsOver(newOwner);
+		}
+		else
+		{
+			// if this is reached then no player won until now
+			if (this.checkForGameEndButNoWinner()) 
+			{
+				this.gameManager.gameIsOver(Player.None);
+			}
+		}
+	}
+	
+	private function checkForGameEndButNoWinner() : Bool
+	{
+		var allTilesOwned:Bool = true;
+		
+		for (x in 0...this.getHorizontalTilesCount())
+		{
+			for (y in 0...this.getVerticalTilesCount())
+			{
+				// the x,y tile has no owner
+				if (this.getTile(x, y).getOwner() == Player.None)
+				{
+					// therefore NOT all tiles are owned
+					allTilesOwned = false;
+				}
+			}
 		}
 		
+		return allTilesOwned;
 	}
 	
 	private function checkVictoryFor(player:Player) : Bool

@@ -7,6 +7,7 @@ import net.matthiasauer.di.IComponentView;
 interface IGameManagerForView extends IComponentView
 {
 	function isGameOver() : Bool;
+	function getWinner() : Player;
 	function getStatus() : GameStatus;
 	function addObserver(observeFunction:Void->Void) : Void;
 }

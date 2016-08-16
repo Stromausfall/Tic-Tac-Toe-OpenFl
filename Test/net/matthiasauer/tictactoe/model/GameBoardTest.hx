@@ -161,6 +161,7 @@ class GameBoardTest extends TestCase
 				testBoard.changeOwner(2, y, player);
 				
 				assertTrue(gameManager.isGameOver());
+				assertEquals(player, gameManager.getWinner());
 			}
 		}
 	}
@@ -185,6 +186,7 @@ class GameBoardTest extends TestCase
 				testBoard.changeOwner(x, 2, player);
 				
 				assertTrue(gameManager.isGameOver());
+				assertEquals(player, gameManager.getWinner());
 			}
 		}
 	}
@@ -208,6 +210,7 @@ class GameBoardTest extends TestCase
 			testBoard.changeOwner(0, 2, player);
 					
 			assertTrue(gameManager.isGameOver());
+			assertEquals(player, gameManager.getWinner());
 		}
 	}
 	
@@ -224,12 +227,40 @@ class GameBoardTest extends TestCase
 			testBoard.resetBoard();
 			testBoard.changeOwner(0, 0, player);
 			testBoard.changeOwner(1, 1, player);
-					
+
 			assertFalse(gameManager.isGameOver());
 					
 			testBoard.changeOwner(2, 2, player);
 					
 			assertTrue(gameManager.isGameOver());
+			assertEquals(player, gameManager.getWinner());
 		}
+	}
+	
+	public function testThatNoWinnerButFullBoardIsDetected() {
+		var system:ISystem = new System();
+					
+		system.register(GameBoard, [IGameBoardForModel]);
+		system.register(GameManager, [IGameManagerForModel]);
+					
+		var testBoard:IGameBoardForModel = system.get(IGameBoardForModel);
+		var gameManager:IGameManagerForModel = system.get(IGameManagerForModel);
+					
+		testBoard.resetBoard();
+		testBoard.changeOwner(0, 0, Player.Player1);
+		testBoard.changeOwner(0, 1, Player.Player2);
+		testBoard.changeOwner(0, 2, Player.Player1);
+		testBoard.changeOwner(1, 0, Player.Player2);
+		testBoard.changeOwner(1, 1, Player.Player1);
+		testBoard.changeOwner(1, 2, Player.Player2);
+		testBoard.changeOwner(2, 0, Player.Player2);
+		testBoard.changeOwner(2, 1, Player.Player1);
+		
+		assertFalse(gameManager.isGameOver());
+		
+		testBoard.changeOwner(2, 2, Player.Player2);
+		
+		assertTrue(gameManager.isGameOver());
+		assertEquals(Player.None, gameManager.getWinner());
 	}
 }
