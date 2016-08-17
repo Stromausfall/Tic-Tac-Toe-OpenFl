@@ -4,6 +4,7 @@ import net.matthiasauer.di.IComponentView;
 import net.matthiasauer.di.ISystem;
 import net.matthiasauer.tictactoe.controller.IController;
 import net.matthiasauer.tictactoe.model.IGameBoardForView;
+import net.matthiasauer.tictactoe.model.IGameManagerForView;
 import net.matthiasauer.tictactoe.model.IGameTile;
 import net.matthiasauer.tictactoe.model.Player;
 import net.matthiasauer.tictactoe.view.utils.element.data.Fading;
@@ -21,7 +22,9 @@ class GameView extends Sprite implements IComponent implements IComponentView
 {
 	private var gameBoard:IGameBoardForView;
 	private var controller:IController;
+	private var gameManager:IGameManagerForView;
 	private var tiles:Array<Array<SVGElement>>;
+	private var gameEndStatus:DisplayObject;
 	
 	public function new() 
 	{
@@ -32,6 +35,7 @@ class GameView extends Sprite implements IComponent implements IComponentView
 	{
 		this.gameBoard = system.get(IGameBoardForView);
 		this.controller = system.get(IController);
+		this.gameManager = system.get(IGameManagerForView);
 		
 		var horizontalTiles:Int = this.gameBoard.getHorizontalTilesCount();
 		var verticalTiles:Int = this.gameBoard.getVerticalTilesCount();
@@ -49,10 +53,33 @@ class GameView extends Sprite implements IComponent implements IComponentView
 				this.installListenerOnModelGameTile(x, y);
 			}
 		}
+		
+		// install the listener on the winner
+		this.gameManager.addGameOverObserver(this.displayGameOver);
+	}
+	
+	private function displayGameOver()
+	{
+		var player:Player = this.gameManager.getWinner();
+		var message:String = "";
+		
+		if (player == Player.None)
+		{
+			message = "Draw";
+		} else {
+			message = player + " won";
+		}
+		
+		this.gameEndStatus = new TextElement().initialize(message, 100, 0x0F0FFF);
+		this.addChild(this.gameEndStatus);
 	}
 	
 	public function reset()
 	{
+		if (this.gameEndStatus != null)
+		{
+			this.removeChild(this.gameEndStatus);
+		}
 	}
 	
 	private function changeGameTile(x:Int, y:Int, newOwner:Player)

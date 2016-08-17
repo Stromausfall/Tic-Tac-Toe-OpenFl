@@ -11,6 +11,7 @@ class GameManager implements IGameManagerForController implements IComponent
 {
 	private var winner:Player;
 	private var observable:SimpleObservable;
+	private var gameOverObservable:SimpleObservable;
 	private var gameStatus:GameStatus;
 	private var gameBoard:IGameBoardForModel;
 
@@ -19,6 +20,7 @@ class GameManager implements IGameManagerForController implements IComponent
 		this.winner = null;
 		this.gameStatus = GameStatus.MENU;
 		this.observable = new SimpleObservable();
+		this.gameOverObservable = new SimpleObservable();
 	}
 
 	public function initializeComponent(system:ISystem) : Void
@@ -54,6 +56,11 @@ class GameManager implements IGameManagerForController implements IComponent
 		this.observable.add("mainObserver", observeFunction);
 	}
 	
+	public function addGameOverObserver(observeFunction:Void->Void) : Void
+	{
+		this.gameOverObservable.add("mainObserver", observeFunction);
+	}
+	
 	public function isGameOver() : Bool
 	{
 		return this.winner != null;
@@ -62,6 +69,7 @@ class GameManager implements IGameManagerForController implements IComponent
 	public function gameIsOver(winner:Player) : Void
 	{
 		this.winner = winner;
+		this.gameOverObservable.notify();
 	}
 	
 	public function getWinner() : Player

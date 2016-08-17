@@ -109,4 +109,18 @@ class GameManagerTest extends TestCase
 		gameManager.goToMenu();
 		assertTrue(notified);
 	}
+	
+	public function testThatGameOverStatusNotifiesGameOverObservers()
+	{
+		var system:ISystem = this.setupSystem();
+		var gameManager:IGameManagerForModel = system.get(IGameManagerForModel);
+		var notified:Bool = false;
+		
+		gameManager.addGameOverObserver(function() { notified = true; });
+		
+		gameManager.startGame();
+		assertFalse(notified);
+		gameManager.gameIsOver(Player.None);
+		assertTrue(notified);
+	}
 }

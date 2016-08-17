@@ -10,4 +10,5 @@ interface IGameManagerForView extends IComponentView
 	function getWinner() : Player;
 	function getStatus() : GameStatus;
 	function addObserver(observeFunction:Void->Void) : Void;
+	function addGameOverObserver(observeFunction:Void->Void) : Void;
 }
