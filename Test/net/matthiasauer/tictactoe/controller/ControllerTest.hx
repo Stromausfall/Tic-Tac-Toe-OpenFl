@@ -22,11 +22,24 @@ class ControllerTest extends TestCase
 		super();
 	}
 	
+	private function createMockedSystem() : ISystem
+	{
+		var mockedGameManager:GameManager = mock(GameManager);
+		mockedGameManager.isGameOver().returns(false);
+		
+		var mockSystem:SystemForMocks = new SystemForMocks();
+		mockSystem.register(GameManager, [IGameManagerForController]);
+		mockSystem.registerMock(GameManager, mockedGameManager);
+		
+		return mockSystem;
+	}
+	
 	public function testThatObserverNotifcationsAreForwardedToThePlayerController()
 	{		
-		var controller:IController = new Controller();
+		var controller:Controller = new Controller();
 		var mockPlayer1:IPlayer = Mockatoo.mock(IPlayer);
 		var mockPlayer2:IPlayer = Mockatoo.mock(IPlayer);
+		controller.initializeComponent(this.createMockedSystem());
 		controller.setPlayers(mockPlayer1, mockPlayer2);
 		
 		var x:Int = 1;
@@ -71,9 +84,10 @@ class ControllerTest extends TestCase
 	
 	public function testThatIPlayerCanInformTheControllerThatItHasFinishedItsTurn()
 	{
-		var controller:IController = new Controller();
+		var controller:Controller = new Controller();
 		var player1:TestIPlayer = new TestIPlayer();
 		var player2:TestIPlayer = new TestIPlayer();
+		controller.initializeComponent(this.createMockedSystem());
 		controller.setPlayers(player1, player2);
 		
 		controller.startGame();
@@ -87,9 +101,10 @@ class ControllerTest extends TestCase
 	
 	public function testThatIPlayerCanInformTheControllerThatItHasFinishedItsTurnMultipleTurns()
 	{
-		var controller:IController = new Controller();
+		var controller:Controller = new Controller();
 		var player1:TestIPlayer = new TestIPlayer();
 		var player2:TestIPlayer = new TestIPlayer();
+		controller.initializeComponent(this.createMockedSystem());
 		controller.setPlayers(player1, player2);
 		
 		controller.startGame();
@@ -124,6 +139,33 @@ class ControllerTest extends TestCase
 		controller.notifyNewGameClick();
 		
 		assertEquals(GameStatus.GAME, gameManager.getStatus());
+	}
+	
+	public function testThatIfGameIsOverNoPlayerIsTriggeredAnymore()
+	{
+		var controller:Controller = new Controller();
+		var player1:TestIPlayer = new TestIPlayer();
+		var player2:TestIPlayer = new TestIPlayer();
+		
+		var mockedGameManager:GameManager = mock(GameManager);
+		mockedGameManager.isGameOver().returns(true);
+		
+		var mockSystem:SystemForMocks = new SystemForMocks();
+		mockSystem.register(GameManager, [IGameManagerForController]);
+		mockSystem.registerMock(GameManager, mockedGameManager);
+		
+		controller.initializeComponent(mockSystem);
+		controller.setPlayers(player1, player2);
+		
+		controller.startGame();		
+		
+		player1.observeFunction(PlayerStatus.FINISHED_TURN);
+		player2.observeFunction(PlayerStatus.FINISHED_TURN);
+		player1.observeFunction(PlayerStatus.FINISHED_TURN);
+		player2.observeFunction(PlayerStatus.FINISHED_TURN);
+		
+		// check that the mock has been called
+		assertEquals(0, player2.startTurnCalled);
 	}
 }
 

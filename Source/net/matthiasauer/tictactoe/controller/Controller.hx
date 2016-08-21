@@ -21,7 +21,9 @@ class Controller implements IController implements IComponent
 	
 	public function notifyTileClick(x:Int, y:Int) : Void
 	{
-		this.activePlayer.notifyTileClick(x, y);
+		if (this.gameManager.isGameOver() == false) {
+			this.activePlayer.notifyTileClick(x, y);
+		}
 	}
 	
 	public function setPlayers(player1:IPlayer, player2:IPlayer) : Void
@@ -45,7 +47,7 @@ class Controller implements IController implements IComponent
 					return;
 				}
 				
-				if (playerStatus == PlayerStatus.FINISHED_TURN)
+				if ((playerStatus == PlayerStatus.FINISHED_TURN) && (this.gameManager.isGameOver() == false))
 				{
 					// change the active and inactive player
 					this.activePlayer = this.inactivePlayer;

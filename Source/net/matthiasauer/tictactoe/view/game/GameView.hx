@@ -71,6 +71,7 @@ class GameView extends Sprite implements IComponent implements IComponentView
 		}
 		
 		this.gameEndStatus = new TextElement().initialize(message, 100, 0x0F0FFF);
+		this.gameEndStatus.y = 200;
 		this.addChild(this.gameEndStatus);
 	}
 	
